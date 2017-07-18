@@ -42,9 +42,10 @@ export class LoginPage {
           password: myPassword,
         },
         success: function(data){
-          console.log(data);
           localStorage.setItem("token", data.api_token);
-          form.navCtrl.push(HomePage);
+          form.navCtrl.push(HomePage, {
+            user: data
+          });
         },
         error: function(err) {
           console.log(err);
