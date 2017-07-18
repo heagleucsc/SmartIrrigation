@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController, NavParams } from 'ionic-angular';
 
-import { HelloIonicPage } from '../hello-ionic/hello-ionic';
+import { HomePage } from '../home/home';
 
 import CryptoJS from 'crypto-js'
 
@@ -37,13 +37,14 @@ export class LoginPage {
         //url: "/api/users/login",
         url: "https://slugsense.herokuapp.com/api/users/login",
         data: {
+
           username: myUsername,
-          password: myPassword
+          password: myPassword,
         },
         success: function(data){
           console.log(data);
           localStorage.setItem("token", data.api_token);
-          form.navCtrl.push(HelloIonicPage);
+          form.navCtrl.push(HomePage);
         },
         error: function(err) {
           console.log(err);
@@ -55,3 +56,4 @@ export class LoginPage {
 
   }
 };
+

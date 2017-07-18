@@ -1,14 +1,35 @@
+<script src="scripts/jquery.js"></script>
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Hello Ionic</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
+
+  <h3>Welcome to the main display page</h3>
+
   <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
+    This starter project is our way of helping you get a functional app running in record time.
   </p>
+  <p>
+    Follow along on the tutorial section of the Ionic docs!
+  </p>
+  <p>
+    <button ion-button color="primary" menuToggle>Toggle Menu</button>
+  </p>
+
+  <p>
+    <button ion-button color="primary" (click)="getData($event)">Get Sample Data</button>
+  </p>
+
+  <p>
+    <button ion-button color="primary" (click)="updateData($nid,$field)">Field 1</button>
+  </p>
+
+  <p value="Hello"></p>
+
 </ion-content>
