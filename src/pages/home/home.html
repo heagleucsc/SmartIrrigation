@@ -1,14 +1,47 @@
+<script src="scripts/jquery.js"></script>
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Hello Ionic</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+
+  <h3>Welcome to the main display page</h3>
+
+  <form action="input">
+    <div class="group">
+          <input type="number" name="NodeId" id="nid" value="51"><span class="highlight"></span><span class="bar"></span>
+          <label>NodeId of interest</label>
+    </div>
+
+    <div class="group">
+          <input type="text" name="Timestamp" id="timestamp"><span class="highlight"></span><span class="bar"></span>
+          <label>Timestamp of Interest</label>
+    </div>
+
+    <!--
+    <p>
+      <button ion-button color="primary" menuToggle>Toggle Menu</button>
+    </p!>
+    -->
+
+    <p>
+      <button ion-button color="primary" (click)="logLatestNid($event)">Get Latest Data</button>
+    </p>
+
+    <p>
+      <button ion-button color="primary" (click)="logLatestAll()">latest/all data to Log</button>
+    </p>
+
+    <p>
+      <button ion-button color="primary" (click)="log24hrData($nid)">24hr data of Node to Log</button>
+    </p>
+  </form>
+
+  <p value="Hello"></p>
+
 </ion-content>
