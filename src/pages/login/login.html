@@ -1,0 +1,25 @@
+<script src="scripts/jquery.js"></script>
+<ion-content padding>
+        <form action="/" method="post">
+          <div class="group">
+                <input type="text" name="username" id="username" value="sustainability" autofocus><span class="highlight"></span><span class="bar"></span>
+                <label>Username</label>
+            </div>
+
+            <!--password field-->
+            <div class="group">
+                <input type="password" name="password" id="password" value="sustainability"><span class="highlight"></span><span class="bar"></span>
+                <label>Password</label>
+            </div>
+          <div>
+              <!-- <input type="submit" value="Log In"/> -->
+              <button class="button buttonBlue" (click)="login($event)">Log in
+                <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+              </button>
+          </div>
+          <div id="result">
+            <p id="errMess"></p>
+          </div>
+        </form>
+
+</ion-content>
