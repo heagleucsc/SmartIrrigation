@@ -74,6 +74,8 @@ corresponding data point.
 */
 
 
+
+
 export class timeBoxedData{
   private _latestDate;
   private _data;
@@ -98,7 +100,7 @@ export class timeBoxedData{
   private withinTimeSpan(latestTime: string): boolean {
       let t = moment(latestTime, moment.ISO_8601);
       return this._earliestDate.isBefore(t)
-                && t.isBefore(this._latestDate);
+                && !(t.isAfter(this._latestDate));
   };
 
   public getDataAsDict() {

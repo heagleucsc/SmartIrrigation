@@ -25,6 +25,12 @@ export class HomePage {
 
 
 
+  // Graph options //
+  // Graph stuff should probably be moved to its own class later
+  mode_day = true;
+
+
+
   constructor() {
     this.token = localStorage.getItem("token");
     if (this.token == null){
@@ -57,6 +63,15 @@ export class HomePage {
   }
   updateNodeIds(){
     this.getLatestAll().done(this._updateNodeIds);
+  }
+  test(){
+    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
+    let timestamp = (<HTMLInputElement>document.getElementById("timestamp")).value;
+    this.get24hrData(nid, timestamp).done(this.handleData);
+  }
+  toggleDailyWeekly(){
+    this.mode_day = !this.mode_day;
+    // this.updateGraph() // -- implement in future
   }
   //---------------------------------------------------------------------//
 
@@ -125,6 +140,15 @@ export class HomePage {
     })
   }
 
+  getNodeReadings(nid){
+    return $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: this.base_url+"/api/nodes/"+nid.toString(),
+      data: {} //api_token: this.token}
+    });
+  }
+
   getUserInfo() {
     //return $.
   }
@@ -165,6 +189,7 @@ export class HomePage {
   };
 
   handleData(data) {
+    //console.log(data);
     let box : timeBoxedData = new timeBoxedData(data, 24);
     console.log(box);
     console.log(box.getDataAsDict());
