@@ -3,7 +3,6 @@ import {EChartsComponent} from "../../components/echart-component";
 
 import * as $ from 'jquery';
 
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -13,12 +12,143 @@ import * as $ from 'jquery';
 
 export class HomePage {
   token = null;
+  base_url = "https://slugsense.herokuapp.com";
+
+  // Unused for now
   nodes = null; // Might be unnecessary
   nodeIDs = null;
   default_nid;
-  base_url = "https://slugsense.herokuapp.com";
   
-  //Start graph
+
+
+  constructor() {
+    this.token = localStorage.getItem("token");
+    if (this.token == null){
+      console.log("token lost");
+    }
+    //let test = new visual_obj(null,["humidity"]);
+    //console.log(test);
+    //this.getLatestAll().done(this.getNids);  }
+  }
+
+  getNids(data){
+    let nids: number[] = [];
+    for (let n of data){
+      nids.push(n.nodeId);
+    }
+    console.log(nids);
+
+
+    return nids;
+  }
+
+
+  /*
+    Functions called via events on the home page
+  */
+  //---------------------------------------------------------------------//
+  log24hrData(event){
+    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
+    let timestamp = (<HTMLInputElement>document.getElementById("timestamp")).value;
+    this.get24hrData(nid,timestamp).done(this.consoleLog);
+  }
+  logLatestAll(event){
+    this.getLatestAll().done(this.consoleLog);
+  }
+  logLatestNid(event){
+    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
+    this.getLatestNode(nid).done(this.consoleLog);
+  }
+  //---------------------------------------------------------------------//
+
+
+/*  
+      HOW TO USE AJAX CALLS
+
+    Ajax calls are asynchronous so they cannot change values of variables
+    outside of its scope, including fields of the HomePage class itself.
+    For example, attempting to make changes to this.token within an ajax call
+    WILL RESULT IN NO CHANGE in this.token. So, data from an ajax call must
+    be either stored in cache (like in localStorage) or be used on the spot.
+
+    To use the data:
+    *nameOfAjaxCall*(*params*).done(*nameOfDataHandlingFunction*);
+
+    There is no need to specify the parameters of the data handle function,
+    as the data from the ajax call will be passed automatically as the input.
+    The done() function is called once the server responds with the data and 
+    the specified data handling function is called.
+
+    Heres an example that simply prints any data from the call to the console:
+
+      this.getLatestNode(51).done(this.consoleLog);
+
+    Both involved functions are defined below.
+
+
+    Ask me (Daniel) if you have any questions
+*/
+
+
+  /*
+    Lists of ajax calls that returns data
+  */
+  //---------------------------------------------------------------------//
+  get24hrData(nid, _timestamp){
+    if (_timestamp){
+      return $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
+        data: {api_token: this.token, timestamp: _timestamp }
+      });
+    }
+    return $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
+      data: {api_token: this.token}
+    });
+  };
+
+  getLatestNode(nid){
+    return $.ajax({
+      type: "POST",
+      dataType: "json",
+      url: this.base_url+"/api/nodes/"+nid.toString()+"/latest_reading",
+      data: { api_token: this.token}
+    });
+  }
+
+  getLatestAll() {
+    return $.ajax({
+      url: this.base_url + "/api/nodes/latest_readings/all",
+      type:"POST",
+      data: {api_token: this.token},
+    })
+  }
+  //---------------------------------------------------------------------//
+
+
+  /*
+  Data handling functions
+
+  Write functions that handle data recieved from ajax calls here
+  */
+  //---------------------------------------------------------------------//
+  consoleLog(data){
+    console.log(data);
+  }
+  //---------------------------------------------------------------------//
+
+
+
+
+
+
+
+
+    //Start graph
   
   @ViewChild(EChartsComponent)
  chart;
@@ -133,97 +263,4 @@ export class HomePage {
  
  //end graph
 
-
-  printData(data){
-    console.log(data);
-  }
-
-  getNids(data){
-    let nids: number[] = [];
-    for (let n of data){
-      nids.push(n.nodeId);
-    }
-    console.log(nids);
-
-
-    return nids;
-  }
-
-  constructor() {
-    this.token = localStorage.getItem("token");
-    this.nodes = localStorage.getItem("nodes");
-    if (this.token == null){
-      console.log("token lost");
-    }
-    //let test = new visual_obj(null,["humidity"]);
-    //console.log(test);
-    //this.getLatestAll().done(this.getNids);  }
-  }
-
-  //Gets 24 hour data
-  get24hrData(nid, _timestamp){
-    if (_timestamp){
-      return $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
-        data: {api_token: this.token, timestamp: _timestamp }
-      });
-    }
-    return $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
-      data: {api_token: this.token}
-    });
-  };
-
-  getLatestNode(nid){
-    return $.ajax({
-      type: "POST",
-      dataType: "json",
-      url: this.base_url+"/api/nodes/"+nid.toString()+"/latest_reading",
-      data: { api_token: this.token}
-    });
-  }
-
-  getLatestAll() {
-    return $.ajax({
-      url: this.base_url + "/api/nodes/latest_readings/all",
-      type:"POST",
-      data: {api_token: this.token},
-    })
-  }
-
-
-  // Make nid an input later
-
-  consoleLog(data){
-    console.log(data);
-  }
-  log24hrData(event){
-    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
-    let timestamp = (<HTMLInputElement>document.getElementById("timestamp")).value;
-    this.get24hrData(nid,timestamp).done(this.consoleLog);
-  }
-  logLatestAll(event){
-    this.getLatestAll().done(this.consoleLog);
-  }
-  logLatestNid(event){
-    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
-    this.getLatestNode(nid).done(this.consoleLog);
-  }
-
-  // Takes 24 hour JSON data and puts it into a list
-  JSONtoList(data){
-
-  }
-
-  updateData(nid,field){
-
-  };
-
-  convertToList(data){
-
-  };
 }
