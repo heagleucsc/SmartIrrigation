@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
+import { EChartsComponent } from "../components/echart-component";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,7 +18,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     ItemDetailsPage,
     ListPage,
-    LoginPage
+    LoginPage,
+	EChartsComponent
   ],
   imports: [
     BrowserModule,
