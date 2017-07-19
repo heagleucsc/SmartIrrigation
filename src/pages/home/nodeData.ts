@@ -11,7 +11,7 @@ interface nodeData_json{
 /*
 nodeDatum is an immutable storage class for a single data point.
 */
-class nodeDatum{
+private class nodeDatum{
   private _date;
   private _id;
   private _data = {
@@ -36,34 +36,44 @@ class nodeDatum{
   getDate(){return this._date};
 }
 
-/*
+/* timeBoxedData
+Main storage class for the JSON data.
 
+-------------------
+
+Constructor must be called via an array of Objects which contain
+at least a createdAt and id field, as indicated in nodeData_json.
+Constructor also takes an hours parameter, which indicates the 
+range of timestamps allowed in the class.
+
+The range of allowed time is calculated as such: 
+    
+    latestTime - hours < time <= latestTime
+
+
+Any data point whos timestamp doesn't fit in the range is rejected
+without throwing any errors.
+
+-------------------
+
+getDataAsDict() will be written to output data as such:
+
+    dictionary<fieldname, array<number>>
+
+where the arrays values indicate the value of the field indicated
+by the fieldname. The dictionary must have an an ordered 'time' field.
+Its index must correspond to the index of the field values of their
+corresponding data point.
+
+ 
 */
 
-class  nodeData{
-  _latestDate;
-  _data;
-  _count = 0;
-  _max;
-  constructor(data: nodeData_json[], dataSize: number){
-    this._max = dataSize;
-    for (let datum of data){
-      let a = new nodeDatum(datum);
-      this._data[a.getDate()] = a;
-      this._count++;
-    }
-  }
-
-  insertDatum(datum: nodeData_json){
-
-  }
-}
 
 class timeBoxedData{
-  _latestDate;
-  _data;
-  _earliestDate;
-  constructor(data: nodeData_json[], hours: number, latestTime: string){
+  private _latestDate;
+  private _data;
+  private _earliestDate;
+  constructor(data: nodeData_json[], hours: number, latestTime = null: string){
     if (!latestTime) this._latestDate = moment(); //now
     else this._latestDate = moment(latestTime, moment.ISO_8601);// "YYYY-MM-DD HH:mm:ss.SSSZ")    
     this._earliestDate = this._latestDate.subtract(hours, 'hours');
@@ -75,6 +85,7 @@ class timeBoxedData{
     if (this.withinTimeSpan(a.getDate())) return;
     this._data[a.getDate()] = a;
   };
+
 
   private withinTimeSpan(latestTime: string): boolean {
       let t = moment(latestTime, moment.ISO_8601);

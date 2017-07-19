@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import * as $ from 'jquery';
 
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -136,5 +137,5 @@ class visual_obj{
       console.log(this._data[field]);
     }
 
-
 }
+
