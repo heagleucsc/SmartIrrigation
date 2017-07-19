@@ -3,6 +3,7 @@ import {EChartsComponent} from "../../components/echart-component";
 
 import * as $ from 'jquery';
 
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -225,32 +226,4 @@ export class HomePage {
   convertToList(data){
 
   };
-}
-
-class visual_obj{
-    _data = {};
-
-    constructor(types: string[]){
-        for (let s of types){
-          let arr: number[] = new Array();
-          this._data[s] = arr;
-        };
-    };
-
-    single_insert(data: Object){
-      for (let key in data){
-        if (key in this._data){
-          this._data[key].push(data[key]);
-        }
-      }
-    }
-
-    print_field(field: string){
-      if (!(field in this._data)){
-        console.log(field + " not found in obj")
-      }
-      console.log(this._data[field]);
-    }
-
-
 }
