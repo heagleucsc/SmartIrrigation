@@ -3,7 +3,7 @@ import * as moment from 'moment';
 /*
 Requirement that a data point has at least a timestamp and an id
 */
-interface nodeData_json{
+export interface nodeData_json{
   createdAt: string;
   id: any;
 }
@@ -11,7 +11,7 @@ interface nodeData_json{
 /*
 nodeDatum is an immutable storage class for a single data point.
 */
-private class nodeDatum{
+class nodeDatum{
   private _date;
   private _id;
   private _data = {
@@ -38,6 +38,7 @@ private class nodeDatum{
 
 /* timeBoxedData
 Main storage class for the JSON data.
+
 
 -------------------
 
@@ -73,7 +74,7 @@ class timeBoxedData{
   private _latestDate;
   private _data;
   private _earliestDate;
-  constructor(data: nodeData_json[], hours: number, latestTime = null: string){
+  constructor(data: nodeData_json[], hours: number, latestTime = null){
     if (!latestTime) this._latestDate = moment(); //now
     else this._latestDate = moment(latestTime, moment.ISO_8601);// "YYYY-MM-DD HH:mm:ss.SSSZ")    
     this._earliestDate = this._latestDate.subtract(hours, 'hours');

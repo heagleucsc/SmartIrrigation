@@ -1,5 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
 import {EChartsComponent} from "../../components/echart-component";
+import * as nodeData from '../home/nodeData';
 
 import * as $ from 'jquery';
 
@@ -26,20 +27,12 @@ export class HomePage {
     if (this.token == null){
       console.log("token lost");
     }
+    // Update the node IDs
+    this.updateNodeIds();
+
     //let test = new visual_obj(null,["humidity"]);
     //console.log(test);
     //this.getLatestAll().done(this.getNids);  }
-  }
-
-  getNids(data){
-    let nids: number[] = [];
-    for (let n of data){
-      nids.push(n.nodeId);
-    }
-    console.log(nids);
-
-
-    return nids;
   }
 
 
@@ -58,6 +51,9 @@ export class HomePage {
   logLatestNid(event){
     let nid = (<HTMLInputElement>document.getElementById("nid")).value;
     this.getLatestNode(nid).done(this.consoleLog);
+  }
+  updateNodeIds(){
+    this.getLatestAll().done(this._updateNodeIds);
   }
   //---------------------------------------------------------------------//
 
@@ -127,6 +123,10 @@ export class HomePage {
       data: {api_token: this.token},
     })
   }
+
+  getUserInfo() {
+    //return $.
+  }
   //---------------------------------------------------------------------//
 
 
@@ -138,10 +138,37 @@ export class HomePage {
   //---------------------------------------------------------------------//
   consoleLog(data){
     console.log(data);
-  }
+  };
+
+  _updateNodeIds(data: Object[]){
+    let nids: number[] = [];
+    //console.log(data);
+    for (let node of data){
+      //console.log(node);
+      if ("nodeId" in node)
+        nids.push(node["nodeId"]);
+    }
+    localStorage.setItem("nids", JSON.stringify(nids))
+  };
+
   //---------------------------------------------------------------------//
 
 
+  /*
+  Utility functions
+  */
+  //---------------------------------------------------------------------//
+  printNodeIds(){
+    let nids = localStorage.getItem("nids");
+    console.log( JSON.parse(nids) );
+  };
+
+  getNodeIds(){
+    let nids = localStorage.getItem("nids");
+    return JSON.parse(nids) ;
+  }
+
+  //---------------------------------------------------------------------//
 
 
 
