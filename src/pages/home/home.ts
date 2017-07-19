@@ -19,7 +19,7 @@ export class HomePage {
 
   // Unused for now
   nodes = null; // Might be unnecessary
-  nodeIDs = null;
+  nodeIds: number[] = [];
   default_nid;
   message = "adskfj"
 
@@ -149,7 +149,8 @@ export class HomePage {
       if ("nodeId" in node)
         nids.push(node["nodeId"]);
     }
-    localStorage.setItem("nids", JSON.stringify(nids))
+    this.nodeIds = nids;
+    //localStorage.setItem("nids", JSON.stringify(nids))
   };
 
   //---------------------------------------------------------------------//
@@ -160,14 +161,8 @@ export class HomePage {
   */
   //---------------------------------------------------------------------//
   printNodeIds(){
-    let nids = localStorage.getItem("nids");
-    console.log( JSON.parse(nids) );
+    console.log(this.nodeIds);
   };
-
-  getNodeIds(){
-    let nids = localStorage.getItem("nids");
-    return JSON.parse(nids) ;
-  }
 
   handleData(data) {
     let box : timeBoxedData = new timeBoxedData(data, 24);
