@@ -36,24 +36,24 @@ export class LoginPage {
         type: "POST",
         //url: "/api/users/login",
         url: "https://slugsense.herokuapp.com/api/users/login",
-        data: {
-
-          username: myUsername,
-          password: myPassword,
-        },
-        success: function(data){
-          console.log(data);
-          localStorage.setItem("token", data.api_token);
-          form.navCtrl.push(HomePage);
-        },
-        error: function(err) {
-          console.log(err);
-          console.log("Invalid Credentials");
+        data: { username: myUsername, password: myPassword }
+      }).fail(function(err) {
+        console.log(err);
+        console.log("Invalid Credentials");
+      }).done(function(data) {
+        console.log(data);
+        localStorage.setItem("token", data.api_token);
+        //console.log(data);
+        let nodes = data.nodes;
+        let nids: number[] = [];
+        for (let node of nodes){
+          nids.push(node.id);
         }
-
+        //console.log(nids);
+        localStorage.setItem("nids", JSON.stringify(nids));
+        form.navCtrl.push(HomePage);
       });
     }
 
   }
 };
-

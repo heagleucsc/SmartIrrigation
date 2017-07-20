@@ -10,6 +10,7 @@ export interface nodeData_json{
 
 /*
 nodeDatum is an immutable storage class for a single data point.
+Should be used only by timeBoxedData
 */
 class nodeDatum{
   private _date;
@@ -88,20 +89,8 @@ export class timeBoxedData{
     for (let datum of data) this.insertData(datum);
   };
 
-  private insertData(datum: nodeData_json): void {
-    let a = new nodeDatum(datum);
-    if (this.withinTimeSpan(a.getDate())) {
-      return;
-    }
-    this._data[a.getDate()] = a;
-  };
 
-
-  private withinTimeSpan(latestTime: string): boolean {
-      let t = moment(latestTime, moment.ISO_8601);
-      return this._earliestDate.isBefore(t)
-                && !(t.isAfter(this._latestDate));
-  };
+  /* Public Data Access Functions */
 
   public getDataAsDict() {
     let dict: { [fieldName: string]: Object[]} = {};
@@ -117,10 +106,35 @@ export class timeBoxedData{
       let datum: nodeDatum = this._data[<string>time];
       for(let param of params) {
         dict[param].push(datum.getField(param));
-      } 
+      }
     }
     return dict;
+  };
+
+  public getLatestData(){
+    let stamps:string[] = Object.keys(this._data);
+    stamps.sort(this.dateCompare);
+    let latestTime = stamps[stamps.length-1];
+    return this._data.latestTime;
   }
+
+  /* Private functions */
+
+  private insertData(datum: nodeData_json): void {
+    let a = new nodeDatum(datum);
+    if (this.withinTimeSpan(a.getDate())) {
+      return;
+    }
+    this._data[a.getDate()] = a;
+  };
+
+
+  private withinTimeSpan(latestTime: string): boolean {
+      let t = moment(latestTime, moment.ISO_8601);
+      return this._earliestDate.isBefore(t)
+                && !(t.isAfter(this._latestDate));
+  };
+
 
   private dateCompare(a: string, b: string) {
     let t1 = moment(a, moment.ISO_8601);
@@ -132,5 +146,7 @@ export class timeBoxedData{
       return 0;
     }
     return 1;
-  }
+  };
+
+
 }

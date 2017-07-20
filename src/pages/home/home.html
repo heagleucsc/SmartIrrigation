@@ -10,16 +10,25 @@
 
 <ion-content padding>
 
-  <h3>Welcome to the main display page</h3>
-  
+  <h3>{{nodeIds}}</h3>
+  <h3>Current: {{currNid()}}</h3>
+  <button (click)="changeNid()">Change nodeID</button>
+
+
+  <p>
+    <button ion-button color="primary" (click)="logLatestAll()">latest/all data to Log</button>
+  </p>
+
 <!--   <echart [option]="option"></echart> -->
   <br>
 
   <form action="input">
+    <!--
     <div class="group">
-          <input type="number" name="NodeId" id="nid" value="51"><span class="highlight"></span><span class="bar"></span>
+          <input type="number" name="NodeId" id="nid" value=""><span class="highlight"></span><span class="bar"></span>
           <label>NodeId of interest</label>
     </div>
+  -->
 
     <div class="group">
           <input type="text" name="Timestamp" id="timestamp"><span class="highlight"></span><span class="bar"></span>
@@ -60,7 +69,7 @@
   <p>
     <button ion-button color="primary" (click)="toggleDailyWeekly()">Toggles between Daily and Weekly</button>
   </p>
-  
+
   <p value="Hello"></p>
 
 </ion-content>

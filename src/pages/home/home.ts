@@ -14,15 +14,14 @@ import * as $ from 'jquery';
 
 
 export class HomePage {
+
   token = null;
   base_url = "https://slugsense.herokuapp.com";
-
-  // Unused for now
-  nodes = null; // Might be unnecessary
   nodeIds: number[] = [];
-  default_nid;
-  message = "adskfj"
+  nodeIndex = 0;
+  //currentNid;
 
+  message = "Hello"
 
 
   // Graph options //
@@ -37,7 +36,13 @@ export class HomePage {
       console.log("token lost");
     }
     // Update the node IDs
-    this.updateNodeIds();
+    let nids = localStorage.getItem("nids");
+    if (!nids) this.updateNodeIds;
+    else this.nodeIds = JSON.parse(nids);
+    //this.currentNid = this.nodeIds[0];
+    //console.log(this.nodeIds);
+
+    //this.updateNodeIds();
 
     //let test = new visual_obj(null,["humidity"]);
     //console.log(test);
@@ -50,28 +55,31 @@ export class HomePage {
   */
   //---------------------------------------------------------------------//
   log24hrData(event){
-    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
+    //let nid = (<HTMLInputElement>document.getElementById("nid")).value;
     let timestamp = (<HTMLInputElement>document.getElementById("timestamp")).value;
-    this.get24hrData(nid,timestamp).done(this.handleData);
+    this.get24hrData(this.currNid(),timestamp).done(this.handleData);
   }
   logLatestAll(event){
     this.getLatestAll().done(this.consoleLog);
   }
   logLatestNid(event){
-    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
-    this.getLatestNode(nid).done(this.consoleLog);
+    //let nid = (<HTMLInputElement>document.getElementById("nid")).value;
+    this.getLatestNode(this.currNid()).done(this.consoleLog);
   }
   updateNodeIds(){
     this.getLatestAll().done(this._updateNodeIds);
   }
   test(){
-    let nid = (<HTMLInputElement>document.getElementById("nid")).value;
+    //let nid = (<HTMLInputElement>document.getElementById("nid")).value;
     let timestamp = (<HTMLInputElement>document.getElementById("timestamp")).value;
-    this.get24hrData(nid, timestamp).done(this.handleData);
+    this.get24hrData(this.currNid(), timestamp).done(this.handleData);
   }
   toggleDailyWeekly(){
     this.mode_day = !this.mode_day;
     // this.updateGraph() // -- implement in future
+  }
+  changeNid(){
+    this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
   }
   //---------------------------------------------------------------------//
 
@@ -167,7 +175,6 @@ export class HomePage {
 
   _updateNodeIds(data: Object[]){
     let nids: number[] = [];
-    //console.log(data);
     for (let node of data){
       //console.log(node);
       if ("nodeId" in node)
@@ -195,123 +202,11 @@ export class HomePage {
     console.log(box.getDataAsDict());
   }
 
+  currNid(): number {
+    return this.nodeIds[this.nodeIndex];
+  }
 
 
-
-
-
- //    //Start graph
- //
- //  @ViewChild(EChartsComponent)
- // chart;
- //
- //   ionViewDidEnter() {
- //   this.chart.resize();
- // }
- //
- // getData(){
- //   let data1: number[] = [70, 55, 60, 45, 71, 71, 72, 69, 77, 52, 70, 65];
- //   return data1;
- // }
- //
- //
- //
- // option = {
- //   backgroundColor: ['#394058'],
- //
- //   title: {
- //        text: 'Sensor 1a',
- //        textStyle: {
- //            fontWeight: 'normal',
- //            fontSize: 16,
- //            color: '#F1F1F3'
- //        },
- //        left: '6%'
- //    },
- // tooltip: {
- //        trigger: 'axis',
- //        axisPointer: {
- //            lineStyle: {
- //                color: '#57617B'
- //            }
- //        }
- //    },
- // legend: {
- //        icon: 'rect',
- //        itemWidth: 14,
- //        itemHeight: 5,
- //        itemGap: 13,
- //        data: ['Humidity'],
- //        right: '4%',
- //        textStyle: {
- //            fontSize: 12,
- //            color: '#F1F1F3'
- //        }
- //    },
- //   color: ['#3398DB'],
- //   grid: {
- //     left: '3%',
- //     right: '4%',
- //     bottom: '3%',
- //     containLabel: true
- //   },
- //   xAxis: [{
- //        type: 'category',
- //        boundaryGap: false,
- //        axisLine: {
- //            lineStyle: {
- //                color: '#57617B'
- //            }
- //        },
- //        data: ['13:00', '13:05', '13:10', '13:15', '13:20', '13:25', '13:30', '13:35', '13:40', '13:45', '13:50', '13:55']
- //    }],
- //   yAxis: [{
- //        type: 'value',
- //        name: 'Humidity（%）',
- //        axisTick: {
- //            show: false
- //        },
- //        axisLine: {
- //            lineStyle: {
- //                color: '#57617B'
- //            }
- //        },
- //        axisLabel: {
- //            margin: 10,
- //            textStyle: {
- //                fontSize: 14
- //            }
- //        },
- //        splitLine: {
- //            lineStyle: {
- //                color: '#57617B'
- //            }
- //        }
- //    }],
- //   series: [
- //     {
- //       name: 'Humidity',
- //       type: 'line',
- //       smooth: true,
- //        symbol: 'circle',
- //        symbolSize: 5,
- //        showSymbol: false,
- //        lineStyle: {
- //            normal: {
- //                width: 1
- //            }
- //        },
- // 	itemStyle: {
- //            normal: {
- //                color: 'rgb(137,189,27)',
- //                borderColor: 'rgba(137,189,2,0.27)',
- //                borderWidth: 12
- //            }
- //        },
- //       data: this.getData()
- //     }
- //   ]
- // };
 
  //end graph
 
