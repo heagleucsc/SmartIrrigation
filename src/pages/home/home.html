@@ -15,6 +15,9 @@
   <button (click)="changeNid()">Change nodeID</button>
 
 
+  <button (click)="fnc()">Humidity:{{data.getLatest("humidity")}}</button>
+
+
   <p>
     <button ion-button color="primary" (click)="logLatestAll()">latest/all data to Log</button>
   </p>

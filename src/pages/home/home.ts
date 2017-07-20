@@ -6,6 +6,8 @@ import {timeBoxedData } from './nodeData';
 
 import * as $ from 'jquery';
 
+import { page_data } from './page_data';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -14,12 +16,15 @@ import * as $ from 'jquery';
 
 
 export class HomePage {
+  /* User holds json data */
+  data: page_data;
 
   token = null;
   base_url = "https://slugsense.herokuapp.com";
 
   // Unused for now
   nodes = {};
+  // 
   user = null;
   nodeIds: number[] = [];
   nodeIndex = 0;
@@ -36,6 +41,8 @@ export class HomePage {
   mode_day = true;
 
   constructor() {
+    
+
     this.token = localStorage.getItem("token");
     if (this.token == null){
       console.log("token lost");
@@ -44,6 +51,7 @@ export class HomePage {
     let nids = localStorage.getItem("nids");
     if (!nids) this.updateNodeIds;
     else this.nodeIds = JSON.parse(nids);
+    this.data = new page_data(this.currNid());
     //this.currentNid = this.nodeIds[0];
     //console.log(this.nodeIds);
 
@@ -89,17 +97,35 @@ export class HomePage {
     this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
   }
   //updates user info, node list and latest node readings
+
+  fnc(){};
+
+  getLatest(field: string, nid: number): number {
+    //return -1;
+    let node = this.nodes[nid];
+    if (!node) return -4;
+    console.log(node);
+    if (!("latest" in node)) return -3;
+    let latest = node.latest;
+    if (!latest) return -2;
+    console.log(latest);
+    if (field in latest)
+      return latest.field;
+    return -1;
+  }
+
+  /* Pulls data from all nodes */
   updateInfo() {
     this.getUserInfo().done(function(data) {
       this.user = data;
       this.compileNodeList(this.user.nodes);
-      console.log(this.user);
+      //console.log(this.user);
     });
     this.getLatestAll().done(function(data) {
       for(let reading of data) {
         this.nodes[reading.nodeId]["latest"] = reading; 
       }
-      console.log(this.nodes);
+      //console.log(this.nodes);
     });
   }
   //---------------------------------------------------------------------//
