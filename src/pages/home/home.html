@@ -1,14 +1,22 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="dark">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>
-      Ionic Blank
+      Main Page
     </ion-title>
+
+    <ion-buttons end>
+      <button ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="home" padding>
+    <h3>Welcome inside, {{username}}!</h3>
+    Your Username is: {{username}}
+  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
 </ion-content>
