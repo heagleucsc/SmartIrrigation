@@ -12,7 +12,7 @@
 
   <h3>Welcome to the main display page</h3>
   
-  <echart [option]="option"></echart>
+<!--   <echart [option]="option"></echart> -->
   <br>
 
   <form action="input">
@@ -45,6 +45,22 @@
     </p>
   </form>
 
+  <p>
+    <button ion-button color="primary" (click)="updateNodeIds()">Save Node IDs</button>
+  </p>
+
+  <p>
+    <button ion-button color="primary" (click)="printNodeIds()">Print Node Ids</button>
+  </p>
+
+  <p>
+    <button ion-button color="primary" (click)="test()">Test</button>
+  </p>
+
+  <p>
+    <button ion-button color="primary" (click)="toggleDailyWeekly()">Toggles between Daily and Weekly</button>
+  </p>
+  
   <p value="Hello"></p>
 
 </ion-content>
