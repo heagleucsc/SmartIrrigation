@@ -17,18 +17,23 @@ export class HomePage {
 
   token = null;
   base_url = "https://slugsense.herokuapp.com";
+
+  // Unused for now
+  nodes = {};
+  user = null;
   nodeIds: number[] = [];
   nodeIndex = 0;
   //currentNid;
 
   message = "Hello"
+  //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
+  refresh_time = 10000;
+
 
 
   // Graph options //
   // Graph stuff should probably be moved to its own class later
   mode_day = true;
-
-
 
   constructor() {
     this.token = localStorage.getItem("token");
@@ -43,10 +48,12 @@ export class HomePage {
     //console.log(this.nodeIds);
 
     //this.updateNodeIds();
+    //runs the first time
+    this.updateInfo();
 
-    //let test = new visual_obj(null,["humidity"]);
-    //console.log(test);
-    //this.getLatestAll().done(this.getNids);  }
+    //runs after intervals
+    setInterval(this.updateInfo.bind(this), this.refresh_time);
+    this.updateNodeIds();
   }
 
 
@@ -80,6 +87,20 @@ export class HomePage {
   }
   changeNid(){
     this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
+  }
+  //updates user info, node list and latest node readings
+  updateInfo() {
+    this.getUserInfo().done(function(data) {
+      this.user = data;
+      this.compileNodeList(this.user.nodes);
+      console.log(this.user);
+    });
+    this.getLatestAll().done(function(data) {
+      for(let reading of data) {
+        this.nodes[reading.nodeId]["latest"] = reading; 
+      }
+      console.log(this.nodes);
+    });
   }
   //---------------------------------------------------------------------//
 
@@ -158,7 +179,12 @@ export class HomePage {
   }
 
   getUserInfo() {
-    //return $.
+    return $.ajax({
+      context: this,
+      url: this.base_url + "/api/users/getuser",
+      type:"POST",
+      data: {api_token: this.token},
+    });
   }
   //---------------------------------------------------------------------//
 
@@ -205,6 +231,13 @@ export class HomePage {
   currNid(): number {
     return this.nodeIds[this.nodeIndex];
   }
+  compileNodeList(data){
+    for (let node of data){
+      this.nodes[node.id] = node;
+    }  
+  }
+
+
 
 
 
