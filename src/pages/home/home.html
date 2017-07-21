@@ -12,12 +12,21 @@
 
   <h3>{{nodeIds}}</h3>
   <h3>Current: {{currentNid()}}</h3>
-  <button (click)="changeNid()">Change nodeID</button>
-
-<!--
-  <button (click)="fnc()">Humidity:{{data.getLatest("humidity")}}</button>
--->
-
+  <p>
+    <button (click)="changeNid()">Change nodeID</button>
+  </p>
+  <p>
+    <button id="humidity">Humidity: {{data.latest["humidity"]}}</button>
+  </p>
+  <p>
+    <button id="temperature">Temperature: {{data.latest["temperature"]}}</button>
+  </p>
+    <p>
+    <button id="moisture">Moisture: {{data.latest["moisture"]}}</button>
+  </p>
+  <p>
+    <button id="sunlight">sunlight: {{data.latest["sunlight"]}}</button>
+  </p>
 
 <!--   <echart [option]="option"></echart> -->
   <br>

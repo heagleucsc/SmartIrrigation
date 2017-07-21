@@ -51,6 +51,9 @@ export class LoginPage {
         }
         //console.log(nids);
         localStorage.setItem("nids", JSON.stringify(nids));
+
+        // Preload latest data from the default node
+        //data.nodes[0]
         form.navCtrl.push(HomePage);
       });
     }

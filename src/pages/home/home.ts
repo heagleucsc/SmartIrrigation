@@ -8,7 +8,7 @@ import { page_data } from './page_data';
 })
 
 export class HomePage {
-  data: page_data
+  private data: page_data
   nodeIds: number[] = [];
   nodeIndex = 0;
   //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
@@ -76,5 +76,9 @@ export class HomePage {
       }
       this.nodeIds = nids;
     });
+  }
+
+  updateButtons() {
+
   }
 }

@@ -32,7 +32,7 @@ export class page_data{
   _nid;
   token;
   _data: timeBoxedData; 
-  _latest;
+  latest = {};
   initialized: false;
   base_url = "https://slugsense.herokuapp.com";
   // visual params //
@@ -42,12 +42,18 @@ export class page_data{
   constructor(nid: number){
     this._nid = nid;
     this.token = localStorage.getItem("token");
+    
+    //init
+    this.latest["humidity"] = -1;
+    this.latest["temperature"] = -1;
+    this.latest["moisture"] = -1;
+    this.latest["sunlight"] = -1;
 
     // Using result from login.ts ensures that the
     // initial display of data on the buttons are accurate
 
     // Not implemented yet - work to be done in login.ts
-    this._latest = localStorage.getItem("latest");
+    //this._latest = localStorage.getItem("latest");
 
     if (this.token == null){
       console.log("token lost");
@@ -64,7 +70,8 @@ export class page_data{
   // rather than from that of the prev_24 call
 
   public getLatest(field: string){
-    return this._latest;
+    //if (!this._latest || !(field in this._latest)) return -1;
+    //return this._latest.field;
     /*
     if (!this._data) return -1;
     let latest = this._data.getLatestData();
@@ -99,7 +106,7 @@ export class page_data{
         console.log("Error in updating latest data");
       }).
       done(function(data){
-        this._latest = data;
+        this.latest = data;
       });
   }
 
@@ -218,7 +225,7 @@ export class page_data{
   }
 
   public logLatest(){
-    console.log(this._latest)
+    console.log(this.latest)
   }
   
 
