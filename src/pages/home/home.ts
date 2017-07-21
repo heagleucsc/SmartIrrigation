@@ -1,6 +1,8 @@
-import {Component, ViewChild} from '@angular/core';
-import { timeBoxedData } from './nodeData';
-import { page_data } from './page_data';
+import { Component, ViewChild } from '@angular/core'
+import { NavController, NavParams } from 'ionic-angular';
+import { PageData, UserData } from './user_data';
+
+import * as $ from 'jquery';
 
 @Component({
   selector: 'page-home',
@@ -8,87 +10,55 @@ import { page_data } from './page_data';
 })
 
 export class HomePage {
-  private data: page_data
-  nodeIds: number[] = [];
-  nodeIndex = 0;
-  //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
-  refresh_time = 10000;
+  /* User holds json data */
+  user: UserData;
+  page: PageData;
+  token = null;
+  base_url = "https://slugsense.herokuapp.com";
+  message = "Hello"
   mode_day = true;
 
-  constructor() {
-    let nids = localStorage.getItem("nids");
-    if (!nids) this.updateNodeIds;
-    else this.nodeIds = JSON.parse(nids);
-    this.data = new page_data(this.currentNid());
-
-    //runs the first time
-    this.updateInfo();
-    //runs after intervals
-    setInterval(this.updateInfo.bind(this), this.refresh_time);
+  constructor(navCtrl: NavController, navParams: NavParams) {
+    this.token = localStorage.getItem("token");
+    if (this.token == null){
+      console.log("token lost");
+    }
+    this.user = new UserData(navParams.get('user'), this.token);
+    this.page = new PageData(this.user.currNid());
   }
 
 
-  updateInfo()  {
-    console.log("updating info")
-    this.data.updateData();
-    // this.updateButtons()
-    // this.updateGraph()
-    this.updateNodeIds()
-
-    this.data.logLatest();
-  }
-
-  /////////////////////////////////////////////
-  // Events from interaction with components // 
-  /////////////////////////////////////////////
-  toggleDailyWeekly(){
-    this.mode_day = !this.mode_day;
-    // this.updateGraph() // -- implement in future
-  };
+  /*
+    Functions called via events on the home page
+  */
   changeNid(){
-    this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
-    this.data.changeNid(this.currentNid());
+    this.user.nextNid();
+    this.page.changeNode(this.user.currNid());
+  }
+
+  currentNid() {
+    return this.user.currNid();
+  }
+
+  toggleDailyWeekly() {
+    this.mode_day = !this.mode_day;
+  }
+
+  logPageData() {
+    console.log(this.page);
+  }
+
+  /*
+  Data handling functions
+
+  Write functions that handle data recieved from ajax calls here
+  */
+  //---------------------------------------------------------------------//
+  consoleLog(data){
+    console.log(data);
   };
+
   printNodeIds(){
-    console.log(this.nodeIds);
-  }
-  buttonPressed(event){
-    let field = event.target.id;
-    console.log(field);
-    // For Heather //
-    // this.data.changeGraphField(field)
-    // this.updateGraph
-  }
-
-
-  /////////////////////////////////////////////
-
-
-
-
-  // Utility functions //
-  currentNid(): number {
-    return this.nodeIds[this.nodeIndex];
+    console.log(this.user.nodeIds);
   };
-
-  // I should really instead pass this context
-  // and handle the update in page_data.ts
-
-  // but I think node ids should be dealt with in home.ts
-  // since page_data should be specific to a single node
-  updateNodeIds() {
-    this.data.getLatestAll().done(function(data)
-    {
-      let nids: number[] = [];
-      for (let node of data){
-        if ("nodeId" in node)
-        nids.push(node["nodeId"]);
-      }
-      this.nodeIds = nids;
-    });
-  }
-
-  updateButtons() {
-
-  }
 }

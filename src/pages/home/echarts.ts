@@ -1,7 +1,7 @@
 import {EChartsComponent} from "../../components/echart-component";
 import {Component, ViewChild} from '@angular/core';
 
-import {timeBoxedData } from './nodeData';
+import {timeBoxedData } from './node_data';
 
 export class data_display{
   //Start graph
