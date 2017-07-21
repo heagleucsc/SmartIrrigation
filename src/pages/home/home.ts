@@ -19,7 +19,7 @@ export class HomePage {
     let nids = localStorage.getItem("nids");
     if (!nids) this.updateNodeIds;
     else this.nodeIds = JSON.parse(nids);
-    this.user = new user_data(this.currentNid());
+    this.user = new user_data(this.nodeIds[0]);
 
     //runs the first time
     this.updateInfo();
@@ -38,16 +38,13 @@ export class HomePage {
     this.user.logLatest();
   }
 
-  /////////////////////////////////////////////
-  // Events from interaction with components // 
-  /////////////////////////////////////////////
-  toggleDailyWeekly(){
+  toggleDailyWeekly() {
     this.mode_day = !this.mode_day;
     // this.updateGraph() // -- implement in future
   };
   changeNid(){
     this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
-    this.user.changeNid(this.currentNid());
+    this.user.changeNid(this.user.changeNid(this.nodeIds[this.nodeIndex]));
   };
   printNodeIds(){
     console.log(this.nodeIds);
@@ -64,11 +61,18 @@ export class HomePage {
   /////////////////////////////////////////////
 
 
+  logUserData() {
+    console.log(this.user);
+  }
 
+  /*
+  Data handling functions
 
-  // Utility functions //
-  currentNid(): number {
-    return this.nodeIds[this.nodeIndex];
+  Write functions that handle data recieved from ajax calls here
+  */
+  //---------------------------------------------------------------------//
+  consoleLog(data){
+    console.log(data);
   };
 
   // I should really instead pass this context
