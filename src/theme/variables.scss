@@ -13,7 +13,8 @@ $app-direction: ltr;
 
 
 @import "ionic.globals";
-
+//test importing angular theme
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 // Shared Variables
 // --------------------------------------------------

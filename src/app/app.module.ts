@@ -8,7 +8,9 @@ import { MyApp } from './app.component';
 //import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { AuthService } from '../providers/auth-service/auth-service';
-
+//for the angular material importing
+// import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+ //import {MdButtonModule, MdCheckboxModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,13 @@ import { AuthService } from '../providers/auth-service/auth-service';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    //for the angular material importing
+    // BrowserAnimationsModule,
+    //  MdButtonModule,
+    //  MdCheckboxModule
+
+    //----------------------
   ],
   bootstrap: [IonicApp],
   entryComponents: [

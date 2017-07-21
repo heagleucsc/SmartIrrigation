@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading, IonicPage, App } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { RegisterPage } from '../register/register';
-
+//import { Materialize } from '../../assets/materialize/css/materialize.css';
 /**
  * Generated class for the LoginPage page.
  *
