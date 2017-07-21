@@ -38,8 +38,9 @@ export class HomePage {
     this.data.logLatest();
   }
 
-
+  /////////////////////////////////////////////
   // Events from interaction with components // 
+  /////////////////////////////////////////////
   toggleDailyWeekly(){
     this.mode_day = !this.mode_day;
     // this.updateGraph() // -- implement in future
@@ -51,7 +52,16 @@ export class HomePage {
   printNodeIds(){
     console.log(this.nodeIds);
   }
+  buttonPressed(event){
+    let field = event.target.id;
+    console.log(field);
+    // For Heather //
+    // this.data.changeGraphField(field)
+    // this.updateGraph
+  }
 
+
+  /////////////////////////////////////////////
 
 
 

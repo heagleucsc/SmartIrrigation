@@ -16,16 +16,16 @@
     <button (click)="changeNid()">Change nodeID</button>
   </p>
   <p>
-    <button id="humidity">Humidity: {{data.latest["humidity"]}}</button>
+    <button id="humidity" (click)="buttonPressed($event);">Humidity: {{data.latest["humidity"]}}</button>
   </p>
   <p>
-    <button id="temperature">Temperature: {{data.latest["temperature"]}}</button>
+    <button id="temperature" (click)="buttonPressed($event);">Temperature: {{data.latest["temperature"]}}</button>
   </p>
     <p>
-    <button id="moisture">Moisture: {{data.latest["moisture"]}}</button>
+    <button id="moisture" (click)="buttonPressed($event);">Moisture: {{data.latest["moisture"]}}</button>
   </p>
   <p>
-    <button id="sunlight">sunlight: {{data.latest["sunlight"]}}</button>
+    <button id="sunlight" (click)="buttonPressed($event);">Sunlight: {{data.latest["sunlight"]}}</button>
   </p>
 
 <!--   <echart [option]="option"></echart> -->
