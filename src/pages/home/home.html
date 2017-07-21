@@ -12,22 +12,31 @@
 
   <h3>{{nodeIds}}</h3>
   <h3>Current: {{currentNid()}}</h3>
-  <button (click)="changeNid()">Change nodeID</button>
+  <p>
+    <button (click)="changeNid()">Change nodeID</button>
+  </p>
+  <p>
+    <button id="humidity" (click)="buttonPressed($event);">Humidity: {{data.latest["humidity"]}}</button>
+  </p>
+  <p>
+    <button id="temperature" (click)="buttonPressed($event);">Temperature: {{data.latest["temperature"]}}</button>
+  </p>
+    <p>
+    <button id="moisture" (click)="buttonPressed($event);">Moisture: {{data.latest["moisture"]}}</button>
+  </p>
+  <p>
+    <button id="sunlight" (click)="buttonPressed($event);">Sunlight: {{data.latest["sunlight"]}}</button>
+  </p>
 
-  <!-- <button (click)="fnc()">Humidity:{{data.getLatest("humidity")}}</button> -->
-
-  <!--   <echart [option]="option"></echart> -->
+<!--   <echart [option]="option"></echart> -->
   <br>
+
+
+
   <p>
     <button ion-button color="primary" (click)="printNodeIds()">Print Node Ids</button>
   </p>
 
-  <p>
-    <button ion-button color="primary" (click)="toggleDailyWeekly()">Toggles between Daily and Weekly</button>
-  </p>
 
-  <p>
-    <button ion-button color="primary" (click)="logPageData()">Log Page Data</button>
-  </p>
 
 </ion-content>
