@@ -1,4 +1,4 @@
-import {timeBoxedData } from './nodeData';
+import {timeBoxedData } from './node_data';
 
 import * as $ from 'jquery';
 
@@ -28,7 +28,7 @@ import * as $ from 'jquery';
 
 
 */
-export class page_data{
+export class user_data{
   _nid;
   token;
   _data: timeBoxedData; 
@@ -122,6 +122,10 @@ export class page_data{
   // For Heather //
 
   // updateGraphOptions(params){
+
+  // }
+
+  // updateGraphFields(field){
 
   // }
 

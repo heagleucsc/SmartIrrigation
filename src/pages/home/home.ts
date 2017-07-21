@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
-import { timeBoxedData } from './nodeData';
-import { page_data } from './page_data';
+import { timeBoxedData } from './node_data';
+import { user_data } from './user_data';
 
 @Component({
   selector: 'page-home',
@@ -8,7 +8,7 @@ import { page_data } from './page_data';
 })
 
 export class HomePage {
-  private data: page_data
+  private user: user_data
   nodeIds: number[] = [];
   nodeIndex = 0;
   //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
@@ -19,7 +19,7 @@ export class HomePage {
     let nids = localStorage.getItem("nids");
     if (!nids) this.updateNodeIds;
     else this.nodeIds = JSON.parse(nids);
-    this.data = new page_data(this.currentNid());
+    this.user = new user_data(this.currentNid());
 
     //runs the first time
     this.updateInfo();
@@ -30,12 +30,12 @@ export class HomePage {
 
   updateInfo()  {
     console.log("updating info")
-    this.data.updateData();
+    this.user.updateData();
     // this.updateButtons()
     // this.updateGraph()
     this.updateNodeIds()
 
-    this.data.logLatest();
+    this.user.logLatest();
   }
 
   /////////////////////////////////////////////
@@ -47,7 +47,7 @@ export class HomePage {
   };
   changeNid(){
     this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
-    this.data.changeNid(this.currentNid());
+    this.user.changeNid(this.currentNid());
   };
   printNodeIds(){
     console.log(this.nodeIds);
@@ -57,7 +57,7 @@ export class HomePage {
     console.log(field);
     // For Heather //
     // this.data.changeGraphField(field)
-    // this.updateGraph
+    // this.updateGraph()
   }
 
 
@@ -77,7 +77,7 @@ export class HomePage {
   // but I think node ids should be dealt with in home.ts
   // since page_data should be specific to a single node
   updateNodeIds() {
-    this.data.getLatestAll().done(function(data)
+    this.user.getLatestAll().done(function(data)
     {
       let nids: number[] = [];
       for (let node of data){
