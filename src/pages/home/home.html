@@ -11,23 +11,68 @@
 <ion-content padding>
 
   <h3>{{nodeIds}}</h3>
-  <h3>Current: {{currentNid()}}</h3>
+  <h3>Current: {{currNid()}}</h3>
   <button (click)="changeNid()">Change nodeID</button>
 
-<!--
-  <button (click)="fnc()">Humidity:{{data.getLatest("humidity")}}</button>
--->
 
+  <button (click)="fnc()">Humidity:{{data.getLatest("humidity")}}</button>
+
+
+  <p>
+    <button ion-button color="primary" (click)="logLatestAll()">latest/all data to Log</button>
+  </p>
 
 <!--   <echart [option]="option"></echart> -->
   <br>
 
+  <form action="input">
+    <!--
+    <div class="group">
+          <input type="number" name="NodeId" id="nid" value=""><span class="highlight"></span><span class="bar"></span>
+          <label>NodeId of interest</label>
+    </div>
+  -->
 
+    <div class="group">
+          <input type="text" name="Timestamp" id="timestamp"><span class="highlight"></span><span class="bar"></span>
+          <label>Timestamp of Interest</label>
+    </div>
+
+    <!--
+    <p>
+      <button ion-button color="primary" menuToggle>Toggle Menu</button>
+    </p!>
+    -->
+
+    <p>
+      <button ion-button color="primary" (click)="logLatestNid($event)">Get Latest Data</button>
+    </p>
+
+    <p>
+      <button ion-button color="primary" (click)="logLatestAll()">latest/all data to Log</button>
+    </p>
+
+    <p>
+      <button ion-button color="primary" (click)="log24hrData($nid)">24hr data of Node to Log</button>
+    </p>
+  </form>
+
+  <p>
+    <button ion-button color="primary" (click)="updateNodeIds()">Save Node IDs</button>
+  </p>
 
   <p>
     <button ion-button color="primary" (click)="printNodeIds()">Print Node Ids</button>
   </p>
 
+  <p>
+    <button ion-button color="primary" (click)="test()">Test</button>
+  </p>
 
+  <p>
+    <button ion-button color="primary" (click)="toggleDailyWeekly()">Toggles between Daily and Weekly</button>
+  </p>
+
+  <p value="Hello"></p>
 
 </ion-content>
