@@ -44,16 +44,17 @@ export class LoginPage {
         console.log(data);
         localStorage.setItem("token", data.api_token);
         //console.log(data);
-        // let nodes = data.nodes;
-        // let nids: number[] = [];
-        // for (let node of nodes){
-        //   nids.push(node.id);
-        // }
+        let nodes = data.nodes;
+        let nids: number[] = [];
+        for (let node of nodes){
+          nids.push(node.id);
+        }
         //console.log(nids);
-        //localStorage.setItem("nids", JSON.stringify(nids));
-        form.navCtrl.push(HomePage, {
-          user: data
-        });
+        localStorage.setItem("nids", JSON.stringify(nids));
+
+        // Preload latest data from the default node
+        //data.nodes[0]
+        form.navCtrl.push(HomePage);
       });
     }
 

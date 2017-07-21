@@ -125,10 +125,6 @@ export class user_data{
 
   // }
 
-  // updateGraphFields(field){
-
-  // }
-
 
 
 
