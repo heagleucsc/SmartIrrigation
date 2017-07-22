@@ -12,8 +12,15 @@
 
   <h3>Welcome to the main display page</h3>
   
-<!--   <echart [option]="option"></echart> -->
-  <br>
+ <echart [option]="option"></echart>
+ 
+ <button ion-button block (click)="getHum()" color="secondary">Humidity</button>
+ <br>
+ <button ion-button block (click)="getMoist()" color="secondary">Moisture</button>
+ <br>
+ <button ion-button block (click)="getTemp()" color="secondary">Temperature</button>
+ <br>
+ <button ion-button block (click)="getSun()" color="secondary">Sunlight</button>
 
   <form action="input">
     <div class="group">
@@ -25,6 +32,7 @@
           <input type="text" name="Timestamp" id="timestamp"><span class="highlight"></span><span class="bar"></span>
           <label>Timestamp of Interest</label>
     </div>
+	
 
     <!--
     <p>
