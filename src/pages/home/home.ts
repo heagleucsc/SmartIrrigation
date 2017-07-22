@@ -208,14 +208,14 @@ export class HomePage {
  chart;
 
  option = {
-   backgroundColor: ['#394058'],
+   backgroundColor: ['#FFFFFF'],
    
    title: {
         text: 'Sensor 53',
         textStyle: {
             fontWeight: 'normal',
             fontSize: 16,
-            color: '#F1F1F3'
+            color: '#000000'
         },
         left: '6%'
     },
@@ -236,7 +236,7 @@ export class HomePage {
         right: '4%',
         textStyle: {
             fontSize: 12,
-            color: '#F1F1F3'
+            color: '#000000'
         }
     },
    color: ['#3398DB'],
