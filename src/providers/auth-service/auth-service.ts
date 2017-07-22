@@ -39,7 +39,7 @@ export class AuthService {
       return Observable.create(observer => {
         // here make a request to the backend to make a real check!
         //later on perfom a backend request and store the token
-        let access = (credentials.password === "pass" && credentials.username === "user");
+        let access = (credentials.password === "sustainability" && credentials.username === "sustainability");
         this.currentUser = new User('SlugSense', 'pass');
         observer.next(access);
         observer.complete();

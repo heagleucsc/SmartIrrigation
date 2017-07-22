@@ -1,60 +1,108 @@
 page-login {
-   //
-  //  .login-content {
-  //    //color = #31D0D6
-  //    background-image: url("../../assets/Artboard.png") 0 0 no-repeat fixed;
-  //    background-color: rgba(49, 208, 214, 0.6);
-  //    height: 100%;
-  //    overflow: hidden;
-  //    z-index: 2;
-   //
-   //
-   //
-  //    .logo-row {
-  //      padding-top: 50px;
-  //      padding-bottom: 20px;
-  //    }
-   //
-  //    .login-box {
-  //      background: #399F8B;
-  //      padding: 20px 20px 0px 20px;
-  //      margin-top: 30px;
-  //    }
-   //
-  //    ion-row {
-  //       align-items: center;
-  //       text-align: center;
-  //     }
-   //
-  //     ion-item {
-  //         border-radius: 30px !important;
-  //         padding-left: 30px !important;
-  //         font-size: 0.9em;
-  //         margin-bottom: 10px;
-  //         border: 1px solid #ffffff;
-  //         border-bottom: 0px !important;
-  //         box-shadow: none !important;
-  //     }
-   //
-  //     .signup-col {
-  //       margin: 0px 16px 0px 16px;
-  //       padding-bottom: 20px;
-  //     }
-   //
-  //     .item-inner {
-  //       border-bottom-color: #ffffff !important;
-  //       box-shadow: none !important;
-  //     }
-   //
-  //     .submit-btn {
-  //       background: #51CFB1;
-  //       border-radius: 30px !important;
-  //       border: 1px solid #ffffff;
-  //     }
-   //
-  //     .register-btn {
-  //       color: #ffffff;
-  //       font-size: 0.8em;
-  //     }
-  //  }
+
+    .login-content {
+      background: linear-gradient(rgba(49,208,214,0.6)), url("../../assets/Artboard.png") no-repeat center;
+      //overflow: hidden;
+    }
+
+    #layer {
+      //background-color: rgba(49, 208, 214, 0.6);
+    }
+
+     .login-box {
+       background: #ffffff;
+       padding: 20px -20px 0px -20px;
+       margin-top: 30px;
+       margin-left: -5%;
+       margin-right: -5%;
+     }
+
+     ion-row {
+        align-items: center;
+        text-align: center;
+      }
+
+      ion-item {
+          border-radius: 30px !important;
+          padding-left: 30px !important;
+          font-size: 0.9em;
+          margin-bottom: 10px;
+          border: 1px solid #ffffff;
+          border-bottom: 0px !important;
+          box-shadow: none !important;
+      }
+   
+      .signup-col {
+        margin: 0px 16px 0px 16px;
+        padding-bottom: 20px;
+      }
+
+      .item-inner {
+        border-bottom-color: #ffffff !important;
+        box-shadow: none !important;
+      }
+
+   #card-wrapper {
+
+   }
+
+
+      #h1-wrapper {
+         font-size: 300% !important;
+         font-weight: 800 !important;
+         text-decoration: underline;
+         text-underline-position: under;
+      }
+      #h2-wrapper {
+        margin-top: -10%;
+        font-size: 140% !important;
+        font-weight: 400 !important;
+      }
+      #name-wrapper {
+        text-align: center;
+        color: #fff;
+        vertical-align: middle;
+        margin-bottom: 15%;
+      }
+
+       #login-wrapper {
+         margin-top: 10%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+       }
+      .submit-btn {
+        background: #019AE8;
+        color: #ffffff;
+        font-weight: bold;
+        width: 90%;
+      }
+
+      #register-wrapper {
+        float: right;
+        margin-top: 5%;
+        margin-right: 2.5%;
+      }
+      .register-btn {
+        color: #fff;
+        font-weight: bold;
+        font-size: 0.8em;
+      }
+
+      #forgotpass-wrapper {
+        float: left;
+        margin-top: 5%;
+        margin-left: 2.5%;
+      }
+      .forgotpass-btn {
+        color: #fff;
+        font-weight: bold;
+        font-size: 0.8em;
+      }
+
+      #password-wrapper {
+        margin-top: 5%;
+      }
+
+
 }

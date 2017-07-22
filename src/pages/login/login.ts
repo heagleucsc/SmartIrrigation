@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading, IonicPage, App } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { RegisterPage } from '../register/register';
-//import { Materialize } from '../../assets/materialize/css/materialize.css';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -66,7 +66,7 @@ export class LoginPage {
       this.loading.dismiss();
 
       let alert = this.alertCtrl.create({
-        title: 'Fail',
+      //  title: 'Fail',
         subTitle: text,
         buttons: ['OK']
       });

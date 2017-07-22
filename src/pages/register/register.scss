@@ -1,9 +1,10 @@
 page-register {
   .login-content {
-    background: #56CA96;
+    // background: #56CA96;
+      background: linear-gradient(rgba(49,208,214,0.6)), url("../../assets/Artboard.png") no-repeat center;
 
     .login-box {
-      background: #509287;
+    //  background: #fff;
       padding: 20px 20px 0px 20px;
       margin-top: 30px;
     }

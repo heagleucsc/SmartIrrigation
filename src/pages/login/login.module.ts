@@ -3,7 +3,10 @@ import { IonicPageModule } from 'ionic-angular';
 //import { HomePage } from './home';
 import { LoginPage } from './login';
 //import { Materialize } from '../../assets/materialize/css/materialize.css';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { NoobAnimationsModule } from '@angular/platform-browser/animations';
+import {Component} from '@angular/core';
+import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -11,7 +14,9 @@ import { LoginPage } from './login';
     LoginPage
   ],
   imports: [
-    IonicPageModule.forChild(LoginPage)
+    IonicPageModule.forChild(LoginPage),
+    MdCardModule, MdButtonModule, MdListModule
+  //  BrowserAnimationsModule
   ],
   exports: [
   //  HomePage,
