@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import { timeBoxedData } from './node_data';
 import { user_data } from './user_data';
+import { data_display } from './echarts';
 
 @Component({
   selector: 'page-home',

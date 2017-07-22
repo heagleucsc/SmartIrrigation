@@ -3,32 +3,34 @@ import {Component, ViewChild} from '@angular/core';
 
 import {timeBoxedData } from './node_data';
 
+let time:Object[] = new Array(24);
+let hum:Object[] = new Array(24);
+let moist:Object[] = new Array(24);
+let temp:Object[] = new Array(24);
+let sun:Object[] = new Array(24);
+
 export class data_display{
-  //Start graph
+	
   private _data: timeBoxedData;
 
-  constructor(){
-
-    //this._data = new timeBoxedData()
+  constructor(data: timeBoxedData){
+    this._data = data;
   }
-
-
-
+  
+  //This function gets the data from an ajax call
+  // May be moved into another class
+    graphData(data){
+	  time = data["time"];
+	  hum = data["humidity"];
+	  moist = data["moisture"];
+	  temp = data["temperature"];
+	  sun = data["sunlight"];
+	  
+  }
 
 
    @ViewChild(EChartsComponent)
   chart;
-
-    ionViewDidEnter() {
-    this.chart.resize();
-  }
-
-  getData(){
-    let data1: number[] = [70, 55, 60, 45, 71, 71, 72, 69, 77, 52, 70, 65];
-    return data1;
-  }
-
-
 
   option = {
     backgroundColor: ['#394058'],
@@ -122,8 +124,53 @@ export class data_display{
                  borderWidth: 12
              }
          },
-        data: this.getData()
+        data: [1,9,1,1,6,1,1,1,1,6,1,1,1,1,1,1,1,1,7,1,1,1,8,1]
       }
     ]
   };
+  
+   ionViewDidEnter() {
+   this.chart.resize();
+ }
+ 
+ 
+ //Switches the graph to display humidity data
+   getHum() {
+	  this.option.yAxis[0].name = "Humidity（%）";
+	  this.option.series[0].name = "Humidity";
+	  this.option.legend.data = ['Humidity'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> hum;
+      this.chart.setOption(this.option, true);
+  }
+  
+  //Switches the graph to display moisture data
+  getMoist() {
+	  this.option.yAxis[0].name = "Moisture（%）";
+	  this.option.series[0].name = "Moisture";
+	  this.option.legend.data = ['Moisture'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> moist;
+      this.chart.setOption(this.option, true);
+  }
+  
+  //Switches the graph to display temperature data
+  getTemp() {
+	  this.option.yAxis[0].name = "Temperature (F)";
+	  this.option.series[0].name = "Temperature";
+	  this.option.legend.data = ['Temperature'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> temp;
+      this.chart.setOption(this.option, true);
+  }
+  
+  //Switches the graph to display sunlight data
+  getSun() {
+	  this.option.yAxis[0].name = "Sunlight（%）";
+	  this.option.series[0].name = "Sunlight";
+	  this.option.legend.data = ['Sunlight'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> sun;
+      this.chart.setOption(this.option, true);
+  }
 }

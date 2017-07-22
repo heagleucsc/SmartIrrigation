@@ -1,4 +1,5 @@
 import {timeBoxedData } from './node_data';
+import {data_display} from './echarts';
 
 import * as $ from 'jquery';
 
@@ -94,9 +95,9 @@ export class user_data{
       }).
       done(function(data){
         this._data = new timeBoxedData(data, 24);
-      });
-    
-    // updateGraphOptions() // 
+      }); 
+	//testing
+	//this.get24hrData(this._nid).done(this.updateGraphOptions);
   };
 
   public updateLatest(){
@@ -124,7 +125,23 @@ export class user_data{
   // updateGraphOptions(params){
 
   // }
-
+  
+  updateGraphOptions(data: timeBoxedData){
+	  let chart : data_display = new data_display(data);
+	  let field: string = "humidity";
+	  chart.graphData(data);
+	  
+	  //if(field === "humidity"){
+		 // chart.getHum();
+	  //}else if(field === "moisture"){
+		  //chart.getMoist();
+	  //}else if(field === "temperature"){
+		  //chart.getTemp();
+	  //}else{
+		  //chart.getSun();
+	  //}
+	  
+  }
 
 
 
