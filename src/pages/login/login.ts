@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, LoadingController, Loading, IonicPage, App } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { RegisterPage } from '../register/register';
+
+import CryptoJS from 'crypto-js';
+
+import * as $ from 'jquery';
+
 //import { Materialize } from '../../assets/materialize/css/materialize.css';
 /**
  * Generated class for the LoginPage page.
@@ -39,7 +44,38 @@ export class LoginPage {
 
 //login method and redirect to main page
     public login() {
-      this.showLoading()
+      this.showLoading();
+      let myUsername = this.registerCredentials.username;
+      let myPassword = CryptoJS.MD5(this.registerCredentials.password).toString();
+      if(typeof(Storage) !== "undefined"){
+        let form = this;
+        sessionStorage.setItem("username", myUsername);
+        //console.log(myUsername+myPassword);
+        $.ajax({
+          type: "POST",
+          context: this,
+          url: "https://slugsense.herokuapp.com/api/users/login",
+          data: { username: myUsername, password: myPassword }
+        }).fail(function(err) {
+          console.log(err);
+          this.showError("Invalid Credentials");
+          //console.log("Invalid Credentials");
+        }).done(function(data) {
+          console.log(data);
+          localStorage.setItem("token", data.api_token);
+          let nodes = data.nodes;
+          let nids: number[] = [];
+          for (let node of nodes){
+            nids.push(node.id);
+          }
+          localStorage.setItem("nids", JSON.stringify(nids));
+          this.nav.setRoot('HomePage');
+          
+          //form.navCtrl.push(HomePage);
+        });
+      };
+    };
+      /*
       this.auth.login(this.registerCredentials).subscribe(allowed => {
         if (allowed) {
           this.nav.setRoot('HomePage');
@@ -50,7 +86,7 @@ export class LoginPage {
         error => {
           this.showError(error);
         });
-    }
+      */
 
 //Displays a now loading screen
     showLoading() {
