@@ -294,12 +294,12 @@ export class HomePage {
         },
 		itemStyle: {
             normal: {
-                color: 'rgb(137,189,27)',
+                color: 'rgb(17, 79, 214)',
                 borderColor: 'rgba(137,189,2,0.27)',
                 borderWidth: 12
             }
         },
-       data: [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+       data: [1,9,1,1,6,1,1,1,1,6,1,1,1,1,1,1,1,1,7,1,1,1,8,1]
      }
    ]
  };
