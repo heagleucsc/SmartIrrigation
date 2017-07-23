@@ -1,3 +1,5 @@
+import {EChartsComponent} from "../../components/echart-component";
+import {Component, ViewChild} from '@angular/core';
 import {timeBoxedData } from './node_data';
 import {data_display} from './echarts';
 
@@ -96,8 +98,6 @@ export class user_data{
       done(function(data){
         this._data = new timeBoxedData(data, 24);
       }); 
-	//testing
-	//this.get24hrData(this._nid).done(this.updateGraphOptions);
   };
 
   public updateLatest(){
@@ -107,6 +107,7 @@ export class user_data{
         console.log("Error in updating latest data");
       }).
       done(function(data){
+		
         this.latest = data;
       });
   }
@@ -126,13 +127,15 @@ export class user_data{
 
   // }
   
-  updateGraphOptions(data: timeBoxedData){
-	  let chart : data_display = new data_display(data);
-	  let field: string = "humidity";
-	  chart.graphData(data);
-	  
+  public updateGraphOptions(chart: data_display, field: string){
+	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
+	  console.log("Test1: " + dict["time"]);
+	  chart.graphData(this._data.getDataAsDict());
+	  console.log("Test2: " + chart.chart);
+	  console.log("Test3: " + chart.option);
+	  chart.getHum();
 	  //if(field === "humidity"){
-		 // chart.getHum();
+		  //chart.getHum();
 	  //}else if(field === "moisture"){
 		  //chart.getMoist();
 	  //}else if(field === "temperature"){
@@ -172,6 +175,7 @@ export class user_data{
   private get24hrData(nid, _timestamp = null){
     if (_timestamp){
       return $.ajax({
+		context: this,
         type: "POST",
         dataType: "json",
         url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
@@ -179,6 +183,7 @@ export class user_data{
       });
     };
     return $.ajax({
+	  context: this,
       type: "POST",
       dataType: "json",
       url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
@@ -244,9 +249,6 @@ export class user_data{
   public logLatest(){
     console.log(this.latest)
   }
-  
-
-
 
 }
 

@@ -13,23 +13,12 @@ export class data_display{
 	
   private _data: timeBoxedData;
 
-  constructor(data: timeBoxedData){
-    this._data = data;
+  constructor(){
+	this.chart;
+	this.option;
   }
   
-  //This function gets the data from an ajax call
-  // May be moved into another class
-    graphData(data){
-	  time = data["time"];
-	  hum = data["humidity"];
-	  moist = data["moisture"];
-	  temp = data["temperature"];
-	  sun = data["sunlight"];
-	  
-  }
-
-
-   @ViewChild(EChartsComponent)
+  @ViewChild(EChartsComponent)
   chart;
 
   option = {
@@ -128,6 +117,17 @@ export class data_display{
       }
     ]
   };
+  
+  //This function gets the data from an ajax call
+  // May be moved into another class
+    graphData(data){
+	  time = data["time"];
+	  hum = data["humidity"];
+	  moist = data["moisture"];
+	  temp = data["temperature"];
+	  sun = data["sunlight"];
+	  
+  }
   
    ionViewDidEnter() {
    this.chart.resize();

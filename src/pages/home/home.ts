@@ -15,6 +15,7 @@ export class HomePage {
   //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
   refresh_time = 10000;
   mode_day = true;
+  chart: data_display;
 
   constructor() {
     let nids = localStorage.getItem("nids");
@@ -26,14 +27,15 @@ export class HomePage {
     this.updateInfo();
     //runs after intervals
     setInterval(this.updateInfo.bind(this), this.refresh_time);
+	this.chart = new data_display();
   }
-
 
   updateInfo()  {
     console.log("updating info")
     this.user.updateData();
+	
     // this.updateButtons()
-    // this.updateGraph()
+    //this.chart.updateGraph()
     this.updateNodeIds()
 
     this.user.logLatest();
@@ -55,7 +57,9 @@ export class HomePage {
   }
   buttonPressed(event){
     let field = event.target.id;
-    console.log(field);
+    console.log(this.chart);
+	this.user.updateGraphOptions(this.chart,field);
+	this.chart.chart.setOption(this.chart.option, true);
     // For Heather //
     // this.user.changeGraphField(field)
     // this.updateGraph
