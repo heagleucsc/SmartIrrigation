@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, App, Loading, LoadingController } from 'ionic-angular';
+import { Events, NavController, IonicPage, App, Loading, LoadingController } from 'ionic-angular';
 import { AuthService } from '../../providers/auth-service/auth-service';
 import { LoginPage } from '../login/login';
 import { user_data } from './user_data';
@@ -22,7 +22,7 @@ export class HomePage {
   refresh_time = 10000;
   mode_day = true;
 
-  constructor(private nav: NavController, private auth: AuthService, private logingOutCtrl: LoadingController) {
+  constructor(public events: Events, private nav: NavController, private auth: AuthService, private logingOutCtrl: LoadingController) {
     //let info = this.auth.getUserInfo();
     this.username = sessionStorage.getItem("username");
     let nids = localStorage.getItem("nids");
@@ -34,7 +34,12 @@ export class HomePage {
     this.updateInfo();
     //runs after intervals
     setInterval(this.updateInfo.bind(this), this.refresh_time);
+    events.subscribe('changedNid', (pNid) => {
+    //this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
+    this.user.changeNid(pNid);
+    console.log(pNid);
 
+    })
   }
 
   updateInfo()  {
@@ -43,7 +48,7 @@ export class HomePage {
     // this.updateButtons()
     // this.updateGraph()
     this.updateNodeIds()
-
+    this.events.publish('updateMenuNow');
     this.user.logLatest();
   }
 
@@ -69,6 +74,7 @@ export class HomePage {
     // this.updateGraph() // -- implement in future
   };
   changeNid(){
+
     this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
     this.user.changeNid(this.currentNid());
   };
@@ -97,8 +103,8 @@ export class HomePage {
 
   // Utility Functions
   currentNid(): number {
-    return this.nodeIds[this.nodeIndex];
-  };
+     return this.nodeIds[this.nodeIndex];
+   };
   updateNodeIds() {
     this.user.getLatestAll().done(function(user)
     {

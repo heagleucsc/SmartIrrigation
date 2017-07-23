@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Events, Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -16,11 +16,17 @@ export class MyApp {
   rootPage:any = LoginPage;
 
   pages: Array<{title: string, component: any}>;
-
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  nidList: Array<{nid: number}>;
+  constructor(public events: Events, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
     //populate the menu with groups later on
     // used for an example of ngFor and navigation
+    events.subscribe('updateMenuNow', ()=>{
+      this.updateMenu();
+      console.log("menuUpdated")
+    })
+
+
     this.pages = [
       { title: 'Home', component: HomePage },
     //  { title: 'List', component: ListPage }
@@ -34,7 +40,12 @@ export class MyApp {
         this.splashScreen.hide();
       });
   }
-
+    updateMenu(){
+      this.nidList = JSON.parse(localStorage.getItem("nids"));
+    }
+    navNid(pNid) {
+      this.events.publish('changedNid', pNid);
+    }
     openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
