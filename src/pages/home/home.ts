@@ -25,9 +25,8 @@ export class HomePage {
   constructor(private nav: NavController, private auth: AuthService, private logingOutCtrl: LoadingController) {
     //let info = this.auth.getUserInfo();
     this.username = sessionStorage.getItem("username");
-
     let nids = localStorage.getItem("nids");
-    if (!nids) this.updateNodeIds;
+    if (!nids) this.updateNodeIds();
     else this.nodeIds = JSON.parse(nids);
     this.user = new user_data(this.currentNid());
 
@@ -62,6 +61,36 @@ export class HomePage {
         });
         this.logingOutLoading.present();
       }
+  /////////////////////////////////////////////
+  // Events from interaction with components //
+  /////////////////////////////////////////////
+  toggleDailyWeekly(){
+    this.mode_day = !this.mode_day;
+    // this.updateGraph() // -- implement in future
+  };
+  changeNid(){
+    this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
+    this.user.changeNid(this.currentNid());
+  };
+  printNodeIds(){
+    console.log(this.nodeIds);
+  }
+  buttonPressed(event){
+    let field = event.target.id;
+    console.log(field);
+    // For Heather //
+    // this.user.changeGraphField(field)
+    // this.updateGraph
+  }
+
+  update(){
+    $.ajax({
+
+    })
+  }
+
+  /////////////////////////////////////////////
+
 
 
 
@@ -84,5 +113,4 @@ export class HomePage {
   updateButtons() {
 
   }
-
-}
+};
