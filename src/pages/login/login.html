@@ -1,25 +1,67 @@
-<script src="scripts/jquery.js"></script>
-<ion-content padding>
-        <form action="/" method="post">
-          <div class="group">
-                <input type="text" name="username" id="username" value="sustainability" autofocus><span class="highlight"></span><span class="bar"></span>
-                <label>Username</label>
-            </div>
+<!--
+  Generated template for the LoginPage page.
 
-            <!--password field-->
-            <div class="group">
-                <input type="password" name="password" id="password" value="sustainability"><span class="highlight"></span><span class="bar"></span>
-                <label>Password</label>
-            </div>
-          <div>
-              <!-- <input type="submit" value="Log In"/> -->
-              <button class="button buttonBlue" (click)="login($event)">Log in
-                <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
-              </button>
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>login</ion-title>
+  </ion-navbar> -->
+
+</ion-header>
+
+<!--This code will be modified later to implement angular material -->
+<ion-content class="login-content" padding>
+
+  <md-list>
+    <div id="name-wrapper">
+        <div id="h1-wrapper">
+          <p>SlugSense</p>
+        </div>
+
+        <div id="h2-wrapper">
+          <p>Smart Irrigation Systems</p>
+        </div>
+    </div>
+  </md-list>
+
+
+  <div class="login-box">
+    <form (ngSubmit)="login()" #registerForm="ngForm">
+      <md-card id="card-wrapper">
+      <ion-row>
+        <ion-col>
+          <ion-list inset>
+            <ion-item id="username-wrapper">
+              <ion-input type="text" placeholder="User Name:" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
+            </ion-item>
+
+            <ion-item id="password-wrapper">
+              <ion-input type="password" placeholder="Password:" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </md-card>
+
+    <div class="login-content">
+      <ion-row>
+        <ion-col class="signup-col">
+          <div id="login-wrapper">
+              <button md-raised-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">LOGIN</button>
           </div>
-          <div id="result">
-            <p id="errMess"></p>
+          <div id="register-wrapper">
+              <button ion-button class="register-btn" block clear (click)="createAccount()">Register</button>
           </div>
-        </form>
+          <div id="forgotpass-wrapper">
+              <button ion-button class="forgotpass-btn" black clear>FORGOT YOUR PASSWORD?</button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+   </form>
+  </div>
 
 </ion-content>

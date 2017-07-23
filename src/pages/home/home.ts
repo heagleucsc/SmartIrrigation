@@ -1,21 +1,31 @@
-import {Component, ViewChild} from '@angular/core';
-import { timeBoxedData } from './node_data';
+import { Component } from '@angular/core';
+import { NavController, IonicPage, App, Loading, LoadingController } from 'ionic-angular';
+import { AuthService } from '../../providers/auth-service/auth-service';
+import { LoginPage } from '../login/login';
 import { user_data } from './user_data';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-
 export class HomePage {
   user: user_data;
   nodeIds: number[] = [];
   nodeIndex = 0;
-  //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
+  username = '';
+  //password = ''; // password should not be stored
+  //optional for loging out effect along with : private logingOutCtrl: LoadingController
+  logingOutLoading: Loading;
+
+    //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
   refresh_time = 10000;
   mode_day = true;
 
-  constructor() {
+  constructor(private nav: NavController, private auth: AuthService, private logingOutCtrl: LoadingController) {
+    //let info = this.auth.getUserInfo();
+    this.username = sessionStorage.getItem("username");
+
     let nids = localStorage.getItem("nids");
     if (!nids) this.updateNodeIds;
     else this.nodeIds = JSON.parse(nids);
@@ -25,8 +35,8 @@ export class HomePage {
     this.updateInfo();
     //runs after intervals
     setInterval(this.updateInfo.bind(this), this.refresh_time);
-  }
 
+  }
 
   updateInfo()  {
     console.log("updating info")
@@ -38,44 +48,27 @@ export class HomePage {
     this.user.logLatest();
   }
 
-  /////////////////////////////////////////////
-  // Events from interaction with components // 
-  /////////////////////////////////////////////
-  toggleDailyWeekly(){
-    this.mode_day = !this.mode_day;
-    // this.updateGraph() // -- implement in future
-  };
-  changeNid(){
-    this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
-    this.user.changeNid(this.currentNid());
-  };
-  printNodeIds(){
-    console.log(this.nodeIds);
+  public logout() {
+    this.showLoadingOut();
+    this.auth.logout().subscribe(succ => {
+      this.nav.setRoot(LoginPage)
+    });
   }
-  buttonPressed(event){
-    let field = event.target.id;
-    console.log(field);
-    // For Heather //
-    // this.user.changeGraphField(field)
-    // this.updateGraph
-  }
-
-
-  /////////////////////////////////////////////
-
+  //Displays a loading screen when loging out
+  public showLoadingOut() {
+        this.logingOutLoading = this.logingOutCtrl.create({
+          content: 'Loging Out...',
+          dismissOnPageChange: true
+        });
+        this.logingOutLoading.present();
+      }
 
 
 
-  // Utility functions //
+  // Utility Functions
   currentNid(): number {
     return this.nodeIds[this.nodeIndex];
   };
-
-  // I should really instead pass this context
-  // and handle the update in user_user.ts
-
-  // but I think node ids should be dealt with in home.ts
-  // since user_user should be specific to a single node
   updateNodeIds() {
     this.user.getLatestAll().done(function(user)
     {
@@ -91,4 +84,5 @@ export class HomePage {
   updateButtons() {
 
   }
+
 }
