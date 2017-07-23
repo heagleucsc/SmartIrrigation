@@ -15,9 +15,12 @@ export class HomePage {
   refresh_time = 10000;
   mode_day = true;
 
+  //
+  message = "default";
+
   constructor() {
     let nids = localStorage.getItem("nids");
-    if (!nids) this.updateNodeIds;
+    if (!nids) this.updateNodeIds();
     else this.nodeIds = JSON.parse(nids);
     this.user = new user_data(this.currentNid());
 
@@ -39,7 +42,7 @@ export class HomePage {
   }
 
   /////////////////////////////////////////////
-  // Events from interaction with components // 
+  // Events from interaction with components //
   /////////////////////////////////////////////
   toggleDailyWeekly(){
     this.mode_day = !this.mode_day;
@@ -60,6 +63,14 @@ export class HomePage {
     // this.updateGraph
   }
 
+  update(){
+    $.ajax({
+
+    })
+  }
+  printM(){
+    console.log(this.message);
+  }
 
   /////////////////////////////////////////////
 

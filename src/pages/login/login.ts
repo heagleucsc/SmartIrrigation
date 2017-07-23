@@ -56,6 +56,7 @@ export class LoginPage {
         //data.nodes[0]
         form.navCtrl.push(HomePage);
       });
+      checkFlag(allowed);
     }
 
   }
