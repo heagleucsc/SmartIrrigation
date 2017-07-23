@@ -75,8 +75,9 @@ export class HomePage {
   printNodeIds(){
     console.log(this.nodeIds);
   }
-  buttonPressed(event){
-    let field = event.target.id;
+  buttonPressed(field: string){
+    //let field = <HTMLElementL>document.GetElementById("humidity");
+    //let field = event.target.id;
     console.log(field);
     // For Heather //
     // this.user.changeGraphField(field)
