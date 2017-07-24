@@ -173,7 +173,7 @@ export class user_data{
 
 */
 
-  private get24hrData(nid, _timestamp = "2017-06-13T22:10:52.338Z"){
+  private get24hrData(nid, _timestamp = null){
     if (_timestamp){
       return $.ajax({
 		context: this,
