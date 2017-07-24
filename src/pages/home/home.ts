@@ -1,4 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
+import {EChartsComponent} from "../../components/echart-component";
 import { timeBoxedData } from './node_data';
 import { user_data } from './user_data';
 import { data_display } from './echarts';
@@ -15,7 +16,7 @@ export class HomePage {
   //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
   refresh_time = 10000;
   mode_day = true;
-  chart: data_display;
+  chartData: data_display;
 
   constructor() {
     let nids = localStorage.getItem("nids");
@@ -27,11 +28,118 @@ export class HomePage {
     this.updateInfo();
     //runs after intervals
     setInterval(this.updateInfo.bind(this), this.refresh_time);
-	this.chart = new data_display();
+	this.chartData = new data_display(this.chart, this.option);
   }
+  
+  //Start Graph
+  @ViewChild(EChartsComponent)
+  chart;
+  
+  option = {
+    backgroundColor: ['#394058'],
+
+    title: {
+         text: '',
+         textStyle: {
+             fontWeight: 'normal',
+             fontSize: 16,
+             color: '#F1F1F3'
+         },
+         left: '6%'
+     },
+  tooltip: {
+         trigger: 'axis',
+         axisPointer: {
+             lineStyle: {
+                 color: '#57617B'
+             }
+         }
+     },
+  legend: {
+         icon: 'rect',
+         itemWidth: 14,
+         itemHeight: 5,
+         itemGap: 13,
+         data: ['Humidity'],
+         right: '4%',
+         textStyle: {
+             fontSize: 12,
+             color: '#F1F1F3'
+         }
+     },
+    color: ['#3398DB'],
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: [{
+         type: 'category',
+         boundaryGap: false,
+         axisLine: {
+             lineStyle: {
+                 color: '#57617B'
+             }
+         },
+         data: []
+     }],
+    yAxis: [{
+         type: 'value',
+         name: 'Humidity（%）',
+         axisTick: {
+             show: false
+         },
+         axisLine: {
+             lineStyle: {
+                 color: '#57617B'
+             }
+         },
+         axisLabel: {
+             margin: 10,
+             textStyle: {
+                 fontSize: 14
+             }
+         },
+         splitLine: {
+             lineStyle: {
+                 color: '#57617B'
+             }
+         }
+     }],
+    series: [
+      {
+        name: 'Humidity',
+        type: 'line',
+        smooth: true,
+         symbol: 'circle',
+         symbolSize: 5,
+         showSymbol: false,
+         lineStyle: {
+             normal: {
+                 width: 1
+             }
+         },
+  	itemStyle: {
+             normal: {
+                 color: 'rgb(137,189,27)',
+                 borderColor: 'rgba(137,189,2,0.27)',
+                 borderWidth: 12
+             }
+         },
+        data: []
+      }
+    ]
+  };
+  
+   ionViewDidEnter() {
+   this.chart.resize();
+ } 
+  //End Graph 
+  
 
   updateInfo()  {
-    console.log("updating info")
+    console.log("updating info");
     this.user.updateData();
 	
     // this.updateButtons()
@@ -55,14 +163,9 @@ export class HomePage {
   printNodeIds(){
     console.log(this.nodeIds);
   }
-  buttonPressed(event){
-    let field = event.target.id;
-    console.log(this.chart);
-	this.user.updateGraphOptions(this.chart,field);
-	this.chart.chart.setOption(this.chart.option, true);
-    // For Heather //
-    // this.user.changeGraphField(field)
-    // this.updateGraph
+  buttonPressed(field){
+    console.log("Test if chart object: " + field);
+	this.user.updateGraphOptions(this.chart, this.chartData, field);
   }
 
 

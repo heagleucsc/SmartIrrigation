@@ -4,6 +4,7 @@ import {timeBoxedData } from './node_data';
 import {data_display} from './echarts';
 
 import * as $ from 'jquery';
+import * as echarts from 'echarts';
 
 
 // page_data class
@@ -127,22 +128,22 @@ export class user_data{
 
   // }
   
-  public updateGraphOptions(chart: data_display, field: string){
+  public updateGraphOptions(chart: EChartsComponent, chartData: data_display, field: string){
 	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
-	  console.log("Test1: " + dict["time"]);
-	  chart.graphData(this._data.getDataAsDict());
-	  console.log("Test2: " + chart.chart);
-	  console.log("Test3: " + chart.option);
-	  chart.getHum();
-	  //if(field === "humidity"){
-		  //chart.getHum();
-	  //}else if(field === "moisture"){
-		  //chart.getMoist();
-	  //}else if(field === "temperature"){
-		  //chart.getTemp();
-	  //}else{
-		  //chart.getSun();
-	  //}
+	  console.log("Test1: " + field);
+	  chartData.graphData(this._data.getDataAsDict());
+	  console.log("Test2: " + field.localeCompare("humidity"));
+	  console.log("Test3: " + chartData.option);
+	 //hartData.getHum(chart, chart.option);
+	  if(field.localeCompare("humidity") == 0){
+		  chartData.getHum(chart, chart.option);
+	  }else if(field.localeCompare("moisture") == 0){
+		  chartData.getMoist(chart, chart.option);
+	  }else if(field === "temperature"){
+		  chartData.getTemp(chart, chart.option);
+	  }else{
+		  chartData.getSun(chart, chart.option);
+	  }
 	  
   }
 
