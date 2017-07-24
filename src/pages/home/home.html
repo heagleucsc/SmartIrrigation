@@ -1,10 +1,15 @@
 <ion-header>
-  <ion-navbar color="dark">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+  <ion-navbar color="light">
+    <!-- <ion-navbar color="#428AC5"> -->
+    <button ion-button menuToggle id="menu-btn">
+      <ion-icon color="black" name="menu"></ion-icon>
     </button>
     <ion-title>
+<<<<<<< HEAD
       Welcome, {{username}}
+=======
+      Node {{this.user._nid}}
+>>>>>>> 46e50578384b52450c5a80eeaac0bc4b6e6bda20
     </ion-title>
 
     <ion-buttons end>
@@ -17,12 +22,21 @@
 
 <ion-content class="home" padding>
 
+<<<<<<< HEAD
 
   <echart id="graph" [option]="option"></echart> 
   <br>
+=======
+  <!-- <echart [option]="option"></echart> -->
+    <!-- <h3>Welcome inside, {{username}}!</h3>
+    Your Username is: {{username}} -->
+  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
+  <!-- <md-card>Simple card</md-card> -->
+>>>>>>> 46e50578384b52450c5a80eeaac0bc4b6e6bda20
 
-  <h3>Current: {{this.user._nid}}</h3>
+  <!-- <h3>Current Node: {{this.user._nid}}</h3> -->
 
+<<<<<<< HEAD
   <p>
     <button ion-button block id="humidity" (click)="buttonPressed('humidity');">Humidity: {{user.latest["humidity"]}}</button>
   </p>
@@ -36,4 +50,29 @@
     <button ion-button block id="sunlight" (click)="buttonPressed('sunlight');">Sunlight: {{user.latest["sunlight"]}}</button>
   </p>
 
+=======
+  <!-- <div id="changeid">
+    <button (click)="changeNid()">Change nodeID</button>
+  </div> -->
+
+  <md-card class="nodes-wrapper">
+    <button class="nodes" ion-button block clear id="humidity" (click)="buttonPressed('humidity');">Humidity:<br /> {{user.latest["humidity"]}}%</button>
+  </md-card>
+
+  <md-card class="nodes-wrapper">
+    <button class="nodes" ion-button block clear id="temperature" (click)="buttonPressed('temperature');">Temperature:<br /> {{user.latest["temperature"]}}F</button>
+  </md-card>
+
+    <md-card class="nodes-wrapper">
+    <button class="nodes" ion-button block clear id="moisture" (click)="buttonPressed('moisture');">Moisture:<br /> {{user.latest["moisture"]}}%</button>
+  </md-card>
+
+  <md-card class="nodes-wrapper">
+    <button class="nodes" ion-button block clear id="sunlight" (click)="buttonPressed('sunlight');">Sunlight:<br /> {{user.latest["sunlight"]}}%</button>
+  </md-card>
+
+  <!-- <md-card class="nodes">
+    <button ion-button block clear color="primary" (click)="printNodeIds()">Print Node Ids</button>
+  </md-card> -->
+>>>>>>> 46e50578384b52450c5a80eeaac0bc4b6e6bda20
 </ion-content>

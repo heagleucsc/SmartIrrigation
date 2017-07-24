@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from './home';
+import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
 //import { LoginPage } from '../login/login';
 //for the angular material importing
 // import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -13,6 +14,7 @@ import { HomePage } from './home';
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
+    MdCardModule, MdButtonModule, MdListModule
     //for the angular material importing
   //   BrowserAnimationsModule,
     //  MdButtonModule,
