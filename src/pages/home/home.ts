@@ -34,12 +34,11 @@ export class HomePage {
     this.updateInfo();
     //runs after intervals
     setInterval(this.updateInfo.bind(this), this.refresh_time);
-    events.subscribe('changedNid', (pNid) => {
-    //this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
-    this.user.changeNid(pNid);
-    console.log(pNid);
 
-    })
+    // Called via menu
+    events.subscribe('changedNid', (pNid) => {
+      this.changeNid(pNid)
+    });
   }
 
   updateInfo()  {
@@ -73,10 +72,10 @@ export class HomePage {
     this.mode_day = !this.mode_day;
     // this.updateGraph() // -- implement in future
   };
-  changeNid(){
-
-    this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
-    this.user.changeNid(this.currentNid());
+  changeNid(nid){
+    this.user.changeNid(nid);
+    //this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
+    //this.user.changeNid(this.currentNid());
   };
   printNodeIds(){
     console.log(this.nodeIds);
