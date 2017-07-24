@@ -1,6 +1,7 @@
 page-home {
   .home {
-    // background: #56CA96;
+    background: linear-gradient(rgba(49,208,214,0.6)), url("../../assets/Artboard.png") no-repeat center;
+
   }
  echart {
    div {
@@ -13,4 +14,43 @@ page-home {
  .scroll-content {
    height: 100%
  }
+
+  echart {
+    div {
+      width: 100%;
+      margin-right: 20px;
+      height:50%;
+    }
+  }
+  .nodes-wrapper{
+    background-color: #fff;
+    margin-bottom: 1.5%;
+    margin-top: 1.5%;
+    margin-left: -5%;
+    margin-right: -5%;
+
+  }
+
+  .nodes {
+    font-weight: bold;
+    color: #000;
+    //text-align: left;
+  }
+
+  .toolbar-background {
+    background-color: #428AC5;
+  }
 }
+  // .menu-btn {
+  //   color: #000;
+  // }
+//
+//   .bar-stable .button{
+//    color: #black !important;
+// }
+// .menu-icon {
+//     color: black;
+// }
+
+
+
