@@ -1,11 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
-import { Events, Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+
+import { Events, Platform, MenuController, Nav } from 'ionic-angular';
 
 import { HomePage } from '../pages/home/home';
+import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 @Component({
@@ -13,43 +15,51 @@ import { LoginPage } from '../pages/login/login';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage:any = LoginPage;
 
+  // make HelloIonicPage the root (or first) page
+  rootPage = LoginPage;
   pages: Array<{title: string, component: any}>;
   nidList: Array<{nid: number}>;
-  constructor(public events: Events, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+
+  constructor(
+    public events: Events,
+    public platform: Platform,
+    public menu: MenuController,
+    public statusBar: StatusBar,
+    public splashScreen: SplashScreen
+  ) {
     this.initializeApp();
-    //populate the menu with groups later on
-    // used for an example of ngFor and navigation
     events.subscribe('updateMenuNow', ()=>{
       this.updateMenu();
       console.log("menuUpdated")
     })
-
-
+    // set our app's pages
     this.pages = [
-      { title: 'Home', component: HomePage },
-    //  { title: 'List', component: ListPage }
+      { title: 'Hello User', component: HomePage },
+     // { title: 'My First List', component: ListPage }
     ];
   }
-    initializeApp() {
-      this.platform.ready().then(() => {
-        // Okay, so the platform is ready and our plugins are available.
-        // Here you can do any higher level native things you might need.
-        this.statusBar.styleDefault();
-        this.splashScreen.hide();
-      });
+
+  updateMenu(){
+    this.nidList = JSON.parse(localStorage.getItem("nids"));
   }
-    updateMenu(){
-      this.nidList = JSON.parse(localStorage.getItem("nids"));
-    }
-    navNid(pNid) {
-      this.events.publish('changedNid', pNid);
-    }
-    openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
+    });
   }
 
+  navNid(pNid) {
+    this.events.publish('changedNid', pNid);
+  }
+
+  openPage(page) {
+    // close the menu when clicking a link from the menu
+    this.menu.close();
+    // navigate to the new page if it is not the current page
+    this.nav.setRoot(page.component);
+  }
 }

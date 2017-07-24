@@ -1,46 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
-
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-//import { HomePage } from '../pages/home/home';
+
+import { HomePage } from '../pages/home/home';
+//import { ItemDetailsPage } from '../pages/item-details/item-details';
+//import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
-import { AuthService } from '../providers/auth-service/auth-service';
-//for the angular material importing
-import {Component} from '@angular/core';
+import { EChartsComponent } from "../components/echart-component";
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
 
 @NgModule({
   declarations: [
     MyApp,
-    //HomePage,
-    LoginPage
+    HomePage,
+    //ItemDetailsPage,
+    //ListPage,
+    LoginPage,
+	  EChartsComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     MdCardModule, MdButtonModule, MdListModule
-  //  BrowserAnimationsModule
-
-
-    //----------------------
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    //HomePage,
+    HomePage,
+    //ItemDetailsPage,
+    //ListPage,
     LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    AuthService,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
 export class AppModule {}

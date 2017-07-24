@@ -2,12 +2,15 @@ page-home {
   .home {
     // background: #56CA96;
   }
+ echart {
+   div {
+     width: 100%;
+     margin-right: 20px;
+     height: 50%;
+   }
+ }
 
-  echart {
-    div {
-      width: 100%;
-      margin-right: 20px;
-      height:50%;
-    }
-  }
+ .scroll-content {
+   height: 100%
+ }
 }

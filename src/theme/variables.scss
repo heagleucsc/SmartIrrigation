@@ -13,7 +13,6 @@ $app-direction: ltr;
 
 
 @import "ionic.globals";
-// //test importing angular theme
 
 
 // Shared Variables
@@ -39,12 +38,7 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222,
-  bgcolor: (
-    base: #31D0D6,
-    contrast: #ffffff,
-    opacity: 0.6
-  )
+  dark:       #222
 );
 
 
@@ -59,9 +53,8 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 
-//may delete or change later
-@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
-//@import "../node_modules/@angular/material/_theming.scss";
+
+
 
 // App Windows Variables
 // --------------------------------------------------

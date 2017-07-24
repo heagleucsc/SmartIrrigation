@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
+import { HomePage } from '../home/home';
 import { NavController, NavParams, AlertController, LoadingController, Loading, IonicPage, App } from 'ionic-angular';
-import { AuthService } from '../../providers/auth-service/auth-service';
-import { RegisterPage } from '../register/register';
 
 import CryptoJS from 'crypto-js';
 import * as $ from 'jquery';
@@ -32,7 +31,7 @@ export class LoginPage {
     loading: Loading;
     registerCredentials = { username: '', password: '' };
 
-    constructor(private nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
+    constructor(private nav: NavController, private alertCtrl: AlertController, private loadingCtrl: LoadingController) { }
 
    //later on for new account registration
     public createAccount() {
@@ -68,9 +67,7 @@ export class LoginPage {
             nids.push(node.id);
           }
           localStorage.setItem("nids", JSON.stringify(nids));
-          console.log("///");
-          this.nav.setRoot('HomePage');
-          console.log("///");
+          this.nav.setRoot(HomePage);
             //form.navCtrl.push(HomePage);
           });
         };

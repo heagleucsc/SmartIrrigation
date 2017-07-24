@@ -4,7 +4,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      Main Page
+      Welcome, {{username}}
     </ion-title>
 
     <ion-buttons end>
@@ -16,16 +16,13 @@
 </ion-header>
 
 <ion-content class="home" padding>
-    <h3>Welcome inside, {{username}}!</h3>
-    Your Username is: {{username}}
-  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
-  <!-- <md-card>Simple card</md-card> -->
+
+
+  <echart id="graph" [option]="option"></echart> 
+  <br>
 
   <h3>Current: {{this.user._nid}}</h3>
 
-  <p>
-    <button (click)="changeNid()">Change nodeID</button>
-  </p>
   <p>
     <button ion-button block id="humidity" (click)="buttonPressed('humidity');">Humidity: {{user.latest["humidity"]}}</button>
   </p>
@@ -39,7 +36,4 @@
     <button ion-button block id="sunlight" (click)="buttonPressed('sunlight');">Sunlight: {{user.latest["sunlight"]}}</button>
   </p>
 
-  <p>
-    <button ion-button color="primary" (click)="printNodeIds()">Print Node Ids</button>
-  </p>
 </ion-content>

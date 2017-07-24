@@ -1,6 +1,10 @@
+import {EChartsComponent} from "../../components/echart-component";
+import {Component, ViewChild} from '@angular/core';
 import {timeBoxedData } from './node_data';
+import {data_display} from './echarts';
 
 import * as $ from 'jquery';
+import * as echarts from 'echarts';
 
 
 // page_data class
@@ -9,17 +13,17 @@ import * as $ from 'jquery';
   has been migrated to this class. Therefore, all actions
   involving the display and retrieving of data should be
   done through this class. Home.ts will instead deal
-  primarily with interactions with html elements and
+  primarily with interactions with html elements and 
   automated features.
 
   Furthermore, having a seperate class for data handling
   allows for an simpler time handling null data that may
   result from an incompleted ajax call.
 
-
+  
   This class will simplify several actions:
     1. When changing the node to display,
-      simply call changeNid(), ie after
+      simply call changeNid(), ie after 
       another node is selected in menu
 
     2. Initializing data on main page will
@@ -31,18 +35,18 @@ import * as $ from 'jquery';
 export class user_data{
   _nid;
   token;
-  _data: timeBoxedData;
+  _data: timeBoxedData; 
   latest = {};
   initialized: false;
   base_url = "https://slugsense.herokuapp.com";
   // visual params //
-  // ..
+  // .. 
   // ..
 
   constructor(nid: number){
     this._nid = nid;
     this.token = localStorage.getItem("token");
-
+    
     //init
     this.latest["humidity"] = -1;
     this.latest["temperature"] = -1;
@@ -94,9 +98,7 @@ export class user_data{
       }).
       done(function(data){
         this._data = new timeBoxedData(data, 24);
-      });
-
-    // updateGraphOptions() //
+      }); 
   };
 
   public updateLatest(){
@@ -106,6 +108,7 @@ export class user_data{
         console.log("Error in updating latest data");
       }).
       done(function(data){
+		
         this.latest = data;
       });
   }
@@ -124,7 +127,25 @@ export class user_data{
   // updateGraphOptions(params){
 
   // }
-
+  
+  public updateGraphOptions(chart: EChartsComponent, chartData: data_display, field: string){
+	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
+	  //console.log("Test1: " + field);
+	  chartData.graphData(this._data.getDataAsDict());
+	  //console.log("Test2: " + field.localeCompare("humidity"));
+	  //console.log("Test3: " + chartData.option);
+	 //hartData.getHum(chart, chart.option);
+	  if(field.localeCompare("humidity") == 0){
+		  chartData.getHum(chart, chart.option);
+	  }else if(field.localeCompare("moisture") == 0){
+		  chartData.getMoist(chart, chart.option);
+	  }else if(field === "temperature"){
+		  chartData.getTemp(chart, chart.option);
+	  }else{
+		  chartData.getSun(chart, chart.option);
+	  }
+	  
+  }
 
 
 
@@ -152,9 +173,10 @@ export class user_data{
 
 */
 
-  private get24hrData(nid, _timestamp = null){
+  private get24hrData(nid, _timestamp = "2017-06-13T22:10:52.338Z"){
     if (_timestamp){
       return $.ajax({
+		context: this,
         type: "POST",
         dataType: "json",
         url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
@@ -162,13 +184,14 @@ export class user_data{
       });
     };
     return $.ajax({
+	  context: this,
       type: "POST",
       dataType: "json",
       url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
       data: {api_token: this.token}
     });
   };
-
+  
   private getLatestNode(nid){
     return $.ajax({
       type: "POST",
@@ -179,7 +202,7 @@ export class user_data{
     });
   };
 
-  // Unused
+  // Unused 
   private getUserInfo() {
     return $.ajax({
       context: this,
@@ -198,7 +221,7 @@ export class user_data{
     })
   };
 
-
+  
 
   /* Utilities */
 
@@ -215,7 +238,7 @@ export class user_data{
     });
   }
 
-  //
+  // 
   public getNodeIds(){
     return this.getLatestAll();
   }
@@ -228,7 +251,6 @@ export class user_data{
     console.log(this.latest)
   }
 
-
-
-
 }
+
+

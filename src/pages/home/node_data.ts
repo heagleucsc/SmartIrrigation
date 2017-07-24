@@ -108,6 +108,11 @@ export class timeBoxedData{
         dict[param].push(datum.getField(param));
       }
     }
+	for(let i = 0; i < stamps.length; i++){
+		stamps[i] = this.formatTime(stamps[i]);
+		
+	}
+	dict["time"] = stamps;
     return dict;
   };
 
@@ -147,6 +152,16 @@ export class timeBoxedData{
     }
     return 1;
   };
+  
+  private formatTime(a:string){
+	  if(a == null){
+		  return a;
+	  }
+	  let start = a.indexOf("T") + 1;
+	  let end = a.indexOf(":", start + 3);
+	  let temp = a.substring(start,end);
+	  return temp;
+  }
 
 
 }
