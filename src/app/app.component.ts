@@ -29,10 +29,9 @@ export class MyApp {
     public splashScreen: SplashScreen
   ) {
     this.initializeApp();
-    this.username = localStorage.getItem("username");
+    this.updateUsername();
     events.subscribe('updateMenuNow', ()=>{
-    this.updateMenu();
-    console.log("menuUpdated")
+      this.updateMenu();
     })
     // set our app's pages
     this.pages = [
@@ -40,10 +39,13 @@ export class MyApp {
      // { title: 'My First List', component: ListPage }
     ];
   }
-
+  updateUsername(){
+    this.username = localStorage.getItem("username");
+    console.log("Username updated")
+  }
   updateMenu(){
-
     this.nidList = JSON.parse(localStorage.getItem("nids"));
+    console.log("Menu updated")
   }
   initializeApp() {
     this.platform.ready().then(() => {
