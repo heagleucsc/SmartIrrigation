@@ -61,7 +61,7 @@ export class user_data{
     if (this.token == null){
       console.log("token lost");
     }
-    this.update24hrData();
+    //this.update24hrData();
   }
 
   // Public access function to pull data
@@ -233,6 +233,11 @@ export class user_data{
     });
   }
 
+  // Check data
+  public AssertDataNotNull(): boolean{
+    return (this._data != null);
+  }
+
   //
   public getNodeIds(){
     return this.getLatestAll();
@@ -246,103 +251,6 @@ export class user_data{
     console.log(this.latest)
   }
 
-  public defaultOption(){
-    return  {
-      backgroundColor: ['#FFFFFF'],
 
-      title: {
-           text: '',
-           textStyle: {
-               fontWeight: 'normal',
-               fontSize: 16,
-               color: '#57617B'
-           },
-           left: '6%'
-       },
-      tooltip: {
-             trigger: 'axis',
-             axisPointer: {
-                 lineStyle: {
-                     color: '#57617B'
-                 }
-             }
-        },
-    legend: {
-           icon: 'rect',
-           itemWidth: 5,
-           itemHeight: 5,
-           itemGap: 13,
-           data: ['Humidity'],
-           right: '4%',
-           textStyle: {
-               fontSize: 12,
-               color: '#57617B'
-           }
-       },
-      color: ['#3398DB'],
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      xAxis: [{
-           type: 'category',
-           boundaryGap: false,
-           axisLine: {
-               lineStyle: {
-                   color: '#57617B'
-               }
-           },
-           data: []
-       }],
-      yAxis: [{
-           type: 'value',
-           name: 'Humidity（%）',
-           axisTick: {
-               show: false
-           },
-           axisLine: {
-               lineStyle: {
-                   color: '#57617B'
-               }
-           },
-           axisLabel: {
-               margin: 10,
-               textStyle: {
-                   fontSize: 14
-               }
-           },
-           splitLine: {
-               lineStyle: {
-                   color: '#57617B'
-               }
-           }
-       }],
-      series: [
-        {
-          name: 'Humidity',
-          type: 'line',
-          smooth: true,
-           symbol: 'circle',
-           symbolSize: 5,
-           showSymbol: false,
-           lineStyle: {
-               normal: {
-                   width: 1
-               }
-           },
-    	itemStyle: {
-               normal: {
-                   color: 'rgb(137,189,27)',
-                   borderColor: 'rgba(137,189,2,0.27)',
-                   borderWidth: 12
-               }
-           },
-          data: []
-        }
-      ]
-    };
-  }
 
 };

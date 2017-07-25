@@ -27,6 +27,7 @@ export class HomePage {
     if (!nids) this.updateNodeIds;
     else this.nodeIds = JSON.parse(nids);
     this.user = new user_data(this.currentNid());
+    console.log(this.user);
 
     //runs the first time
     this.updateInfo();
@@ -73,16 +74,27 @@ export class HomePage {
   updateInfo()  {
     console.log("updating info");
     this.user.updateData();
-
+    console.log("checking data");
+    this.checkData();
     // this.updateButtons()
     //this.chart.updateGraph()
     this.updateNodeIds()
     this.events.publish('updateMenuNow');
     this.user.logLatest();
-    this.user.log24hr();
+    //this.user.log24hr();
   }
 
-  //checkData
+  // Timeout function
+  checkData(){
+    let temp = this;
+    if (!this.user.AssertDataNotNull()){
+      setTimeout(temp.checkData, 1500);
+    }
+  }
+
+  AssertDataNotNull(){
+    return this.user.AssertDataNotNull();
+  }
 
   /////////////////////////////////////////////
   // Events from interaction with components //
