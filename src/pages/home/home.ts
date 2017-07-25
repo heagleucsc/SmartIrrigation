@@ -19,8 +19,7 @@ export class HomePage {
   refresh_time = 10000;
   mode_day = true;
   time 
-  //chart: data_display;
-
+  
   constructor(public events: Events, private nav: NavController, private logingOutCtrl: LoadingController) {
     this.username = sessionStorage.getItem("username");
     let nids = localStorage.getItem("nids");
@@ -150,7 +149,15 @@ export class HomePage {
   };
   
    ionViewDidEnter() {
-   this.chart.resize();
+   console.log("Try: " + this.chart);
+   var temp = this;
+   setTimeout(function(){
+	    console.log("Inside: " + temp.chart);
+        temp.buttonPressed("humidity");
+        temp.chart.resize();
+    }, 100);
+   //this.buttonPressed("humidity");
+   //this.chart.resize();
  } 
 
   //End Graph 
