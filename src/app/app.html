@@ -2,7 +2,7 @@
 
   <ion-header>
     <ion-toolbar>
-      <ion-title>Pages</ion-title>
+      <ion-title>Hello, {{username}}</ion-title>
     </ion-toolbar>
   </ion-header>
 
@@ -11,7 +11,7 @@
     <img width="100%" height="20%" src="../assets/userbg.jpg" alt="User-Bg">
     <ion-list>
       <button menuClose ion-item *ngFor="let pNid of nidList" (click)="navNid(pNid)">
-        {{pNid}}
+        Node {{pNid}}
       </button>
     </ion-list>
   </ion-content>

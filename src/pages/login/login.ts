@@ -46,7 +46,7 @@ export class LoginPage {
       let myPassword = CryptoJS.MD5(this.registerCredentials.password).toString();
       if(typeof(Storage) !== "undefined"){
         let form = this;
-        sessionStorage.setItem("username", myUsername);
+        localStorage.setItem("username", myUsername);
         //console.log(myUsername+myPassword);
         $.ajax({
           type: "POST",

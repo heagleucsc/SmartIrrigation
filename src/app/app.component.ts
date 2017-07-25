@@ -20,7 +20,7 @@ export class MyApp {
   rootPage = LoginPage;
   pages: Array<{title: string, component: any}>;
   nidList: Array<{nid: number}>;
-
+  username: string;
   constructor(
     public events: Events,
     public platform: Platform,
@@ -29,9 +29,10 @@ export class MyApp {
     public splashScreen: SplashScreen
   ) {
     this.initializeApp();
+    this.username = localStorage.getItem("username");
     events.subscribe('updateMenuNow', ()=>{
-      this.updateMenu();
-      console.log("menuUpdated")
+    this.updateMenu();
+    console.log("menuUpdated")
     })
     // set our app's pages
     this.pages = [
@@ -41,6 +42,7 @@ export class MyApp {
   }
 
   updateMenu(){
+
     this.nidList = JSON.parse(localStorage.getItem("nids"));
   }
   initializeApp() {
