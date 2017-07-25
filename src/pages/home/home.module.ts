@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { HomePage } from './home';
+import {data_display} from './echarts';
 import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
 //import { LoginPage } from '../login/login';
 //for the angular material importing
@@ -10,6 +11,7 @@ import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
 @NgModule({
   declarations: [
     HomePage,
+	data_display
   //  LoginPage
   ],
   imports: [

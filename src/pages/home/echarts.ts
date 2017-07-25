@@ -1,7 +1,8 @@
-import {EChartsComponent} from "../../components/echart-component";
-import {Component, ViewChild} from '@angular/core';
-import {timeBoxedData } from './node_data';
+//This class is modified from the EchartComponent class
+//From an echarts api tutorial: https://golb.hplar.ch/p/Integrate-ECharts-into-an-Ionic-2-app
 
+import {Component, Input, ViewChild, OnInit, OnDestroy} from '@angular/core';
+import {timeBoxedData } from './node_data';
 import * as echarts from 'echarts';
 
 let time:Object[] = new Array(24);
@@ -10,16 +11,43 @@ let moist:Object[] = new Array(24);
 let temp:Object[] = new Array(24);
 let sun:Object[] = new Array(24);
 
-export class data_display{
-	
-  private _data: timeBoxedData;
-  chart;
-  option;
+@Component({
+ selector: 'echart',
+ template: `<div #root></div>`
+})
 
-  constructor(chart, option){
-	this.chart = chart; 
-	this.option = option;
-  }
+export class data_display implements OnInit, OnDestroy{
+	
+@Input('option')
+ option: any;
+
+ private chart: any;
+ private _data: timeBoxedData;
+
+ @ViewChild('root')
+ private root;
+
+ resizeListener = () => this.resize();
+
+ ngOnInit(): void {
+   this.chart = echarts.init(this.root.nativeElement);
+   this.chart.setOption(this.option);
+   window.addEventListener('resize', this.resizeListener, true);
+ }
+
+ ngOnDestroy(): void {
+   window.removeEventListener('resize', this.resizeListener);
+   this.chart.destroy();
+ }
+
+ setOption(option, notMerge) {
+   this.chart.setOption(option, notMerge);
+ }
+
+ resize() {
+   this.chart.resize();
+ }
+	
   
   //This function gets the data from an ajax call
   // May be moved into another class
@@ -34,42 +62,42 @@ export class data_display{
  
  
  //Switches the graph to display humidity data
-   getHum(chart, option) {
-	  option.yAxis[0].name = "Humidity（%）";
-	  option.series[0].name = "Humidity";
-	  option.legend.data = ['Humidity'];
-	  option.xAxis[0].data = <string[]> time;
-      option.series[0].data = <number[]> hum;
-      chart.setOption(option, true);
+   getHum() {
+	  this.option.yAxis[0].name = "Humidity（%）";
+	  this.option.series[0].name = "Humidity";
+	  this.option.legend.data = ['Humidity'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> hum;
+      this.chart.setOption(this.option, true);
   }
   
   //Switches the graph to display moisture data
-  getMoist(chart, option){
-	  option.yAxis[0].name = "Moisture（%）";
-	  option.series[0].name = "Moisture";
-	  option.legend.data = ['Moisture'];
-	  option.xAxis[0].data = <string[]> time;
-      option.series[0].data = <number[]> moist;
-      chart.setOption(option, true);
+  getMoist(){
+	  this.option.yAxis[0].name = "Moisture（%）";
+	  this.option.series[0].name = "Moisture";
+	  this.option.legend.data = ['Moisture'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> moist;
+      this.chart.setOption(this.option, true);
   }
   
   //Switches the graph to display temperature data
-  getTemp(chart,option) {
-	  option.yAxis[0].name = "Temperature (F)";
-	  option.series[0].name = "Temperature";
-	  option.legend.data = ['Temperature'];
-	  option.xAxis[0].data = <string[]> time;
-      option.series[0].data = <number[]> temp;
-      chart.setOption(option, true);
+  getTemp() {
+	  this.option.yAxis[0].name = "Temperature (F)";
+	  this.option.series[0].name = "Temperature";
+	  this.option.legend.data = ['Temperature'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> temp;
+      this.chart.setOption(this.option, true);
   }
   
   //Switches the graph to display sunlight data
-  getSun(chart,option) {
-	  option.yAxis[0].name = "Sunlight（%）";
-	  option.series[0].name = "Sunlight";
-	  option.legend.data = ['Sunlight'];
-	  option.xAxis[0].data = <string[]> time;
-      option.series[0].data = <number[]> sun;
-      chart.setOption(option, true);
+  getSun() {
+	  this.option.yAxis[0].name = "Sunlight（%）";
+	  this.option.series[0].name = "Sunlight";
+	  this.option.legend.data = ['Sunlight'];
+	  this.option.xAxis[0].data = <string[]> time;
+      this.option.series[0].data = <number[]> sun;
+      this.chart.setOption(this.option, true);
   }
 }

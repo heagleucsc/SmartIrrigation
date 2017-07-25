@@ -1,4 +1,3 @@
-import {EChartsComponent} from "../../components/echart-component";
 import {Component, ViewChild} from '@angular/core';
 import {timeBoxedData } from './node_data';
 import {data_display} from './echarts';
@@ -114,35 +113,30 @@ export class user_data{
   }
 
 
-  public changeNid(nid){
+  public changeNid(nid, chart){
     this._nid = nid;
     this.update24hrData();
     this.updateLatest();
-    // updateGraphOptions() //
+	this.updateGraphOptions(chart, "humidity");
   }
 
 
-  // For Heather //
-
-  // updateGraphOptions(params){
-
-  // }
-  
-  public updateGraphOptions(chart: EChartsComponent, chartData: data_display, field: string){
+//Updates the graph  
+  public updateGraphOptions(chart: data_display, field: string){
 	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
 	  //console.log("Test1: " + field);
-	  chartData.graphData(this._data.getDataAsDict());
+	  chart.graphData(this._data.getDataAsDict());
 	  //console.log("Test2: " + field.localeCompare("humidity"));
 	  //console.log("Test3: " + chartData.option);
 	 //hartData.getHum(chart, chart.option);
 	  if(field.localeCompare("humidity") == 0){
-		  chartData.getHum(chart, chart.option);
+		  chart.getHum();
 	  }else if(field.localeCompare("moisture") == 0){
-		  chartData.getMoist(chart, chart.option);
+		  chart.getMoist();
 	  }else if(field === "temperature"){
-		  chartData.getTemp(chart, chart.option);
+		  chart.getTemp();
 	  }else{
-		  chartData.getSun(chart, chart.option);
+		  chart.getSun();
 	  }
 	  
   }

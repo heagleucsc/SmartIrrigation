@@ -7,7 +7,8 @@ import { HomePage } from '../pages/home/home';
 //import { ItemDetailsPage } from '../pages/item-details/item-details';
 //import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
-import { EChartsComponent } from "../components/echart-component";
+import {data_display} from '../pages/home/echarts';
+//import { EChartsComponent } from "../components/echart-component";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,7 +21,8 @@ import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
     //ItemDetailsPage,
     //ListPage,
     LoginPage,
-	  EChartsComponent
+	//EChartsComponent,
+	data_display
   ],
   imports: [
     BrowserModule,

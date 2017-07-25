@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import { Events, NavController, IonicPage, App, Loading, LoadingController } from 'ionic-angular';
-import {EChartsComponent} from "../../components/echart-component";
 import { timeBoxedData } from './node_data';
 import { user_data } from './user_data';
 import { data_display } from './echarts';
@@ -19,7 +18,8 @@ export class HomePage {
   //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
   refresh_time = 10000;
   mode_day = true;
-  chartData: data_display;
+  time 
+  //chart: data_display;
 
   constructor(public events: Events, private nav: NavController, private logingOutCtrl: LoadingController) {
     this.username = sessionStorage.getItem("username");
@@ -30,11 +30,14 @@ export class HomePage {
 
     //runs the first time
     this.updateInfo();
+	
     //runs after intervals
     setInterval(this.updateInfo.bind(this), this.refresh_time);
 
     // Chart setup
-    this.chartData = new data_display(this.chart, this.option);
+    //this.chart = new data_display();
+	//this.chart.setOpt()
+	//this.chart.ngOnInit()
 
     // Called via menu
     events.subscribe('changedNid', (pNid) => {
@@ -43,10 +46,13 @@ export class HomePage {
   }
   
   //Start Graph
-  @ViewChild(EChartsComponent)
+  //Graph options were modified from code given to us by the SlugSense mentors
+  
+  
+  @ViewChild(data_display)
   chart;
   
-  option = {
+   option = {
     backgroundColor: ['#394058'],
 
     title: {
@@ -146,6 +152,7 @@ export class HomePage {
    ionViewDidEnter() {
    this.chart.resize();
  } 
+
   //End Graph 
   
 
@@ -168,7 +175,7 @@ export class HomePage {
     // this.updateGraph() // -- implement in future
   };
   changeNid(nid){
-    this.user.changeNid(nid);
+    this.user.changeNid(nid, this.chart);
     //this.nodeIndex = (this.nodeIndex + 1) % this.nodeIds.length;
     //this.user.changeNid(this.currentNid());
   };
@@ -177,7 +184,7 @@ export class HomePage {
   }
   buttonPressed(field){
     //console.log("Test if chart object: " + field);
-	this.user.updateGraphOptions(this.chart, this.chartData, field);
+	this.user.updateGraphOptions(this.chart, field);
   }
 
 

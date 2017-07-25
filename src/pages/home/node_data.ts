@@ -108,6 +108,7 @@ export class timeBoxedData{
         dict[param].push(datum.getField(param));
       }
     }
+	/*Takes the array of time stamps and puts them in the correct format*/
 	for(let i = 0; i < stamps.length; i++){
 		stamps[i] = this.formatTime(stamps[i]);
 		
@@ -152,7 +153,8 @@ export class timeBoxedData{
     }
     return 1;
   };
-  
+
+  /* Puts the timestamps into the correct format for the graph*/
   private formatTime(a:string){
 	  if(a == null){
 		  return a;
