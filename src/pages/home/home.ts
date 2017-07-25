@@ -1,8 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import { Events, NavController, IonicPage, App, Loading, LoadingController } from 'ionic-angular';
-import { timeBoxedData } from './node_data';
+//import { timeBoxedData } from './node_data';
 import { user_data } from './user_data';
-import { data_display } from './echarts';
+import { data_display, getDefault } from './echarts';
+//import { getDefault } from './echarts';
 
 @IonicPage()
 @Component({
@@ -18,8 +19,8 @@ export class HomePage {
   //refrest time (in milliseconds, change according to preference, current set at 10 seconds for testing)
   refresh_time = 10000;
   mode_day = true;
-  time 
-  
+  time
+
   constructor(public events: Events, private nav: NavController, private logingOutCtrl: LoadingController) {
     this.username = sessionStorage.getItem("username");
     let nids = localStorage.getItem("nids");
@@ -29,7 +30,7 @@ export class HomePage {
 
     //runs the first time
     this.updateInfo();
-	
+
     //runs after intervals
     setInterval(this.updateInfo.bind(this), this.refresh_time);
 
@@ -43,111 +44,17 @@ export class HomePage {
       this.changeNid(pNid)
     });
   }
-  
+
   //Start Graph
   //Graph options were modified from code given to us by the SlugSense mentors
-  
-  
+
+
   @ViewChild(data_display)
   chart;
-  
-   option = {
-    backgroundColor: ['#FFFFFF'],
 
-    title: {
-         text: '',
-         textStyle: {
-             fontWeight: 'normal',
-             fontSize: 16,
-             color: '#57617B'
-         },
-         left: '6%'
-     },
-  tooltip: {
-         trigger: 'axis',
-         axisPointer: {
-             lineStyle: {
-                 color: '#57617B'
-             }
-         }
-     },
-  legend: {
-         icon: 'rect',
-         itemWidth: 14,
-         itemHeight: 5,
-         itemGap: 13,
-         data: ['Humidity'],
-         right: '4%',
-         textStyle: {
-             fontSize: 12,
-             color: '#57617B'
-         }
-     },
-    color: ['#3398DB'],
-    grid: {
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
-      containLabel: true
-    },
-    xAxis: [{
-         type: 'category',
-         boundaryGap: false,
-         axisLine: {
-             lineStyle: {
-                 color: '#57617B'
-             }
-         },
-         data: []
-     }],
-    yAxis: [{
-         type: 'value',
-         name: 'Humidity（%）',
-         axisTick: {
-             show: false
-         },
-         axisLine: {
-             lineStyle: {
-                 color: '#57617B'
-             }
-         },
-         axisLabel: {
-             margin: 10,
-             textStyle: {
-                 fontSize: 14
-             }
-         },
-         splitLine: {
-             lineStyle: {
-                 color: '#57617B'
-             }
-         }
-     }],
-    series: [
-      {
-        name: 'Humidity',
-        type: 'line',
-        smooth: true,
-         symbol: 'circle',
-         symbolSize: 5,
-         showSymbol: false,
-         lineStyle: {
-             normal: {
-                 width: 1
-             }
-         },
-  	itemStyle: {
-             normal: {
-                 color: 'rgb(137,189,27)',
-                 borderColor: 'rgba(137,189,2,0.27)',
-                 borderWidth: 12
-             }
-         },
-        data: []
-      }
-    ]
-  };
-  
+  option = getDefault();
+
+
    ionViewDidEnter() {
    console.log("Try: " + this.chart);
    var temp = this;
@@ -158,24 +65,27 @@ export class HomePage {
     }, 100);
    //this.buttonPressed("humidity");
    //this.chart.resize();
- } 
+ }
 
-  //End Graph 
-  
+  //End Graph
+
 
   updateInfo()  {
     console.log("updating info");
     this.user.updateData();
-	
+
     // this.updateButtons()
     //this.chart.updateGraph()
     this.updateNodeIds()
     this.events.publish('updateMenuNow');
     this.user.logLatest();
+    this.user.log24hr();
   }
 
+  //checkData
+
   /////////////////////////////////////////////
-  // Events from interaction with components // 
+  // Events from interaction with components //
   /////////////////////////////////////////////
   toggleDailyWeekly(){
     this.mode_day = !this.mode_day;

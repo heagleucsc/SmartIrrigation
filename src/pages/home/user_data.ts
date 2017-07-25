@@ -1,9 +1,9 @@
-import {Component, ViewChild} from '@angular/core';
+import {ViewChild} from '@angular/core';
 import {timeBoxedData } from './node_data';
 import {data_display} from './echarts';
 
 import * as $ from 'jquery';
-import * as echarts from 'echarts';
+//import * as echarts from 'echarts';
 
 
 // page_data class
@@ -12,17 +12,17 @@ import * as echarts from 'echarts';
   has been migrated to this class. Therefore, all actions
   involving the display and retrieving of data should be
   done through this class. Home.ts will instead deal
-  primarily with interactions with html elements and 
+  primarily with interactions with html elements and
   automated features.
 
   Furthermore, having a seperate class for data handling
   allows for an simpler time handling null data that may
   result from an incompleted ajax call.
 
-  
+
   This class will simplify several actions:
     1. When changing the node to display,
-      simply call changeNid(), ie after 
+      simply call changeNid(), ie after
       another node is selected in menu
 
     2. Initializing data on main page will
@@ -34,18 +34,18 @@ import * as echarts from 'echarts';
 export class user_data{
   _nid;
   token;
-  _data: timeBoxedData; 
+  _data: timeBoxedData;
   latest = {};
   initialized: false;
   base_url = "https://slugsense.herokuapp.com";
   // visual params //
-  // .. 
+  // ..
   // ..
 
   constructor(nid: number){
     this._nid = nid;
     this.token = localStorage.getItem("token");
-    
+
     //init
     this.latest["humidity"] = -1;
     this.latest["temperature"] = -1;
@@ -96,8 +96,9 @@ export class user_data{
         console.log("Node id invalid or server timeout");
       }).
       done(function(data){
+        console.log(data);
         this._data = new timeBoxedData(data, 24);
-      }); 
+      });
   };
 
   public updateLatest(){
@@ -107,7 +108,7 @@ export class user_data{
         console.log("Error in updating latest data");
       }).
       done(function(data){
-		
+
         this.latest = data;
       });
   }
@@ -121,9 +122,9 @@ export class user_data{
   }
 
 
-//Updates the graph  
+//Updates the graph
   public updateGraphOptions(chart: data_display, field: string){
-	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
+	  //let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
 	  //console.log("Test1: " + field);
 	  chart.graphData(this._data.getDataAsDict());
 	  //console.log("Test2: " + field.localeCompare("humidity"));
@@ -138,7 +139,7 @@ export class user_data{
 	  }else{
 		  chart.getSun();
 	  }
-	  
+
   }
 
 
@@ -185,7 +186,7 @@ export class user_data{
       data: {api_token: this.token}
     });
   };
-  
+
   private getLatestNode(nid){
     return $.ajax({
       type: "POST",
@@ -196,7 +197,7 @@ export class user_data{
     });
   };
 
-  // Unused 
+  // Unused
   private getUserInfo() {
     return $.ajax({
       context: this,
@@ -215,7 +216,7 @@ export class user_data{
     })
   };
 
-  
+
 
   /* Utilities */
 
@@ -232,7 +233,7 @@ export class user_data{
     });
   }
 
-  // 
+  //
   public getNodeIds(){
     return this.getLatestAll();
   }
@@ -245,6 +246,103 @@ export class user_data{
     console.log(this.latest)
   }
 
-}
+  public defaultOption(){
+    return  {
+      backgroundColor: ['#FFFFFF'],
 
+      title: {
+           text: '',
+           textStyle: {
+               fontWeight: 'normal',
+               fontSize: 16,
+               color: '#57617B'
+           },
+           left: '6%'
+       },
+      tooltip: {
+             trigger: 'axis',
+             axisPointer: {
+                 lineStyle: {
+                     color: '#57617B'
+                 }
+             }
+        },
+    legend: {
+           icon: 'rect',
+           itemWidth: 5,
+           itemHeight: 5,
+           itemGap: 13,
+           data: ['Humidity'],
+           right: '4%',
+           textStyle: {
+               fontSize: 12,
+               color: '#57617B'
+           }
+       },
+      color: ['#3398DB'],
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [{
+           type: 'category',
+           boundaryGap: false,
+           axisLine: {
+               lineStyle: {
+                   color: '#57617B'
+               }
+           },
+           data: []
+       }],
+      yAxis: [{
+           type: 'value',
+           name: 'Humidity（%）',
+           axisTick: {
+               show: false
+           },
+           axisLine: {
+               lineStyle: {
+                   color: '#57617B'
+               }
+           },
+           axisLabel: {
+               margin: 10,
+               textStyle: {
+                   fontSize: 14
+               }
+           },
+           splitLine: {
+               lineStyle: {
+                   color: '#57617B'
+               }
+           }
+       }],
+      series: [
+        {
+          name: 'Humidity',
+          type: 'line',
+          smooth: true,
+           symbol: 'circle',
+           symbolSize: 5,
+           showSymbol: false,
+           lineStyle: {
+               normal: {
+                   width: 1
+               }
+           },
+    	itemStyle: {
+               normal: {
+                   color: 'rgb(137,189,27)',
+                   borderColor: 'rgba(137,189,2,0.27)',
+                   borderWidth: 12
+               }
+           },
+          data: []
+        }
+      ]
+    };
+  }
 
+};
