@@ -53,14 +53,14 @@ export class HomePage {
   chart;
   
    option = {
-    backgroundColor: ['#394058'],
+    backgroundColor: ['#FFFFFF'],
 
     title: {
          text: '',
          textStyle: {
              fontWeight: 'normal',
              fontSize: 16,
-             color: '#F1F1F3'
+             color: '#57617B'
          },
          left: '6%'
      },
@@ -81,7 +81,7 @@ export class HomePage {
          right: '4%',
          textStyle: {
              fontSize: 12,
-             color: '#F1F1F3'
+             color: '#57617B'
          }
      },
     color: ['#3398DB'],
