@@ -172,6 +172,7 @@ export class user_data{
     if (_timestamp){
       return $.ajax({
 		context: this,
+        async:false,
         type: "POST",
         dataType: "json",
         url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
@@ -180,6 +181,7 @@ export class user_data{
     };
     return $.ajax({
 	  context: this,
+      async:false,
       type: "POST",
       dataType: "json",
       url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),

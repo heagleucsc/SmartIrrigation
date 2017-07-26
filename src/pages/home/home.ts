@@ -57,13 +57,9 @@ export class HomePage {
 
 
    ionViewDidEnter() {
-   console.log("Try: " + this.chart);
-   var temp = this;
-   setTimeout(function(){
-	    console.log("Inside: " + temp.chart);
-        temp.buttonPressed("humidity");
-        temp.chart.resize();
-    }, 100);
+	    console.log("Inside: " + this.chart);
+      this.buttonPressed("humidity");
+      this.chart.resize();
    //this.buttonPressed("humidity");
    //this.chart.resize();
  }
@@ -74,8 +70,8 @@ export class HomePage {
   updateInfo()  {
     console.log("updating info");
     this.user.updateData();
-    console.log("checking data");
-    this.checkData();
+    //console.log("checking data");
+    //this.checkData();
     // this.updateButtons()
     //this.chart.updateGraph()
     this.updateNodeIds()
