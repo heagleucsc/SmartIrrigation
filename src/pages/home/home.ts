@@ -2,7 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import { Events, NavController, IonicPage, App, Loading, LoadingController } from 'ionic-angular';
 //import { timeBoxedData } from './node_data';
 import { user_data } from './user_data';
-import { data_display, getDefault } from './echarts';
+import { data_display, getDefaultOptions } from './echarts';
 //import { getDefault } from './echarts';
 
 @IonicPage()
@@ -53,7 +53,7 @@ export class HomePage {
   @ViewChild(data_display)
   chart;
 
-  option = getDefault();
+  option = getDefaultOptions();
 
 
    ionViewDidEnter() {

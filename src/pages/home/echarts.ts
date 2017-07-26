@@ -104,7 +104,7 @@ export class data_display implements OnInit, OnDestroy{
   }
 }
 
-export function getDefault(){
+export function getDefaultOptions(){
   return  {
     backgroundColor: ['#FFFFFF'],
 
