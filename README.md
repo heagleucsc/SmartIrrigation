@@ -1,9 +1,11 @@
-Test login page based on ionic default tutorial template
+This is the first release for the SlugSense hybrid mobile app. 
+SlugSense's currently opperating nodes use the username: sustainability and the password: sustainability.
 
-At the moment, this test serves as a simple test for login authoritization.
-Credentials are provided by default and press login to move to the main page. 
-
-Token is displayed in the console after pressing "Get Sample Data", followed by an error code for a bad ajax call.
+Release 1 Features:
+- Login 
+- Main page that displays the last 24 hours of data from a working node, with buttons that display current values. 
+When clicked, the the graph will display the last 24 hours of data for the button.
+- Sliding Menu that allows you to switch between all of your nodes.
 
 Install dependencies and run in your browser via:
 ```bash
