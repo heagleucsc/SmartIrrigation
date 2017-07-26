@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Component } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
@@ -13,6 +13,10 @@ import {data_display} from '../pages/home/echarts';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
+import { AuthService } from '../providers/auth-service/auth-service';
+
+
+
 
 @NgModule({
   declarations: [
@@ -39,6 +43,7 @@ import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
   ],
   providers: [
     StatusBar,
+    AuthService,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

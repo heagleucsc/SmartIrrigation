@@ -12,17 +12,17 @@ import * as echarts from 'echarts';
   has been migrated to this class. Therefore, all actions
   involving the display and retrieving of data should be
   done through this class. Home.ts will instead deal
-  primarily with interactions with html elements and 
+  primarily with interactions with html elements and
   automated features.
 
   Furthermore, having a seperate class for data handling
   allows for an simpler time handling null data that may
   result from an incompleted ajax call.
 
-  
+
   This class will simplify several actions:
     1. When changing the node to display,
-      simply call changeNid(), ie after 
+      simply call changeNid(), ie after
       another node is selected in menu
 
     2. Initializing data on main page will
@@ -34,18 +34,18 @@ import * as echarts from 'echarts';
 export class user_data{
   _nid;
   token;
-  _data: timeBoxedData; 
+  _data: timeBoxedData;
   latest = {};
   initialized: false;
   base_url = "https://slugsense.herokuapp.com";
   // visual params //
-  // .. 
+  // ..
   // ..
 
   constructor(nid: number){
     this._nid = nid;
     this.token = localStorage.getItem("token");
-    
+
     //init
     this.latest["humidity"] = -1;
     this.latest["temperature"] = -1;
@@ -97,7 +97,7 @@ export class user_data{
       }).
       done(function(data){
         this._data = new timeBoxedData(data, 24);
-      }); 
+      });
   };
 
   public updateLatest(){
@@ -107,7 +107,7 @@ export class user_data{
         console.log("Error in updating latest data");
       }).
       done(function(data){
-		
+
         this.latest = data;
       });
   }
@@ -121,7 +121,7 @@ export class user_data{
   }
 
 
-//Updates the graph  
+//Updates the graph
   public updateGraphOptions(chart: data_display, field: string){
 	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
 	  //console.log("Test1: " + field);
@@ -138,7 +138,7 @@ export class user_data{
 	  }else{
 		  chart.getSun();
 	  }
-	  
+
   }
 
 
@@ -171,6 +171,7 @@ export class user_data{
     if (_timestamp){
       return $.ajax({
 		context: this,
+        async:false,
         type: "POST",
         dataType: "json",
         url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
@@ -179,13 +180,14 @@ export class user_data{
     };
     return $.ajax({
 	  context: this,
+      async: false,
       type: "POST",
       dataType: "json",
       url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
       data: {api_token: this.token}
     });
   };
-  
+
   private getLatestNode(nid){
     return $.ajax({
       type: "POST",
@@ -196,7 +198,7 @@ export class user_data{
     });
   };
 
-  // Unused 
+  // Unused
   private getUserInfo() {
     return $.ajax({
       context: this,
@@ -215,7 +217,7 @@ export class user_data{
     })
   };
 
-  
+
 
   /* Utilities */
 
@@ -232,7 +234,7 @@ export class user_data{
     });
   }
 
-  // 
+  //
   public getNodeIds(){
     return this.getLatestAll();
   }
@@ -246,5 +248,3 @@ export class user_data{
   }
 
 }
-
-

@@ -110,8 +110,10 @@ export class timeBoxedData{
     }
 	/*Takes the array of time stamps and puts them in the correct format*/
 	for(let i = 0; i < stamps.length; i++){
-		stamps[i] = this.formatTime(stamps[i]);
-		
+		//stamps[i] = this.formatTime(stamps[i]);
+    let t1 = moment(stamps[i], moment.ISO_8601);
+    stamps[i] = t1.format("h:mmA");
+
 	}
 	dict["time"] = stamps;
     return dict;
