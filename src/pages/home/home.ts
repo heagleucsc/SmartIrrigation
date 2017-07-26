@@ -95,12 +95,8 @@ public showLoadingOut() {
 
    ionViewDidEnter() {
    console.log("Try: " + this.chart);
-   var temp = this;
-   setTimeout(function(){
-	    console.log("Inside: " + temp.chart);
-        temp.buttonPressed("humidity");
-        temp.chart.resize();
-    }, 100);
+   this.buttonPressed("humidity");
+   this.chart.resize();
    //this.buttonPressed("humidity");
    //this.chart.resize();
  }

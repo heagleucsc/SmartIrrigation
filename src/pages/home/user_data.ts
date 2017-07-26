@@ -1,10 +1,13 @@
 import {Component, ViewChild} from '@angular/core';
 import {timeBoxedData } from './node_data';
-import {data_display} from './echarts';
+import {data_display, getDefaultOptions, getOptionsNoGradient} from './echarts';
 
 import * as $ from 'jquery';
 import * as echarts from 'echarts';
+import * as moment from 'moment';
 
+
+let DEFAULT_FIELD = "humidity"
 
 // page_data class
 /*
@@ -112,20 +115,27 @@ export class user_data{
       });
   }
 
-
   public changeNid(nid, chart){
     this._nid = nid;
     this.update24hrData();
     this.updateLatest();
-	this.updateGraphOptions(chart, "humidity");
+	  this.updateGraphOptions(chart, DEFAULT_FIELD);
   }
 
 
 //Updates the graph
   public updateGraphOptions(chart: data_display, field: string){
 	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
-	  //console.log("Test1: " + field);
-	  chart.graphData(this._data.getDataAsDict());
+    //console.log("Test1: " + field);
+    if (this.assertOneNoneNullDataToday()){
+      chart.option = getDefaultOptions();
+      chart.graphData(this._data.getDataAsDict());
+    }
+    else {
+      chart.option = getOptionsNoGradient();
+      chart.graphData(this.emptyData());
+      // graphNull()
+    }
 	  //console.log("Test2: " + field.localeCompare("humidity"));
 	  //console.log("Test3: " + chartData.option);
 	 //hartData.getHum(chart, chart.option);
@@ -139,6 +149,24 @@ export class user_data{
 		  chart.getSun();
 	  }
 
+  }
+
+  private assertOneNoneNullDataToday(){
+    let now = moment();
+    let hoursInDay = 24;
+    let yesterday = now.subtract(hoursInDay,'hours');
+    let latestDate = moment(this.latest["createdAt"], moment.ISO_8601);
+    return latestDate.isAfter(yesterday);
+  }
+
+  private emptyData(){
+    return {
+      "time": new Array(24),
+      "humidity": new Array(24),
+      "temperature": new Array(24),
+      "moisture": new Array(24),
+      "sunlight": new Array(24),
+    }
   }
 
 
@@ -191,6 +219,7 @@ export class user_data{
   private getLatestNode(nid){
     return $.ajax({
       type: "POST",
+      async: false,
       context: this,
       dataType: "json",
       url: this.base_url+"/api/nodes/"+nid.toString()+"/latest_reading",
