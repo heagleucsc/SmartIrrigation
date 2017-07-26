@@ -1,2 +1,4 @@
 Register a new user function:
 ------------------------------
+This feature has not been fully tested yet, (since it requires some feedback from the backend side to make sure a new user data has been successfully added to the server's database entries)
+It requires further testing and -possible- modifications.
