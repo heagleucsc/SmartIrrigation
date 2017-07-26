@@ -1,0 +1,17 @@
+Unit Test SideMenu
+
+Side Menu is built with /src/app dynamically with nodeIds attached to the user account.
+
+updateUsername(): User name is currently stored/rewritten in localStorage upon logging in, and should be called to update.
+    Issues:
+    	As we only have access to one verifiable account registered in the server, this function seems to be trivial. But theoretically it should listen to the event in login every time we set localStorage for "username".
+
+updateMenu(): As username, list of user's NodeId is also stored in localStorage, after updateNodeIds() in HomePage is completed,"update menu" will be published to event to call this function to update menu list. 
+    To test the menu list, I changed "nids" in localStorage, and the list was updated by the calling updateInfo() in HomePage as it should be.
+    Issues:
+    	The list depends on when updateInfo() is called in HomePage, users may experience some delay when they add a new NodeId and updateInfo() is not called yet.
+
+navNid(pNid): To pass the nodeId to HomePage to visualize data, "changedNid" should be published to HomePage calling changeNid(pNid) in HomePage every time the nodeIds on the list is clicked. 
+    To test navNid, "changedNid" is published to events followed by nodeId from Stub, and it successfully changed the node displaying. 
+    Issues:
+    	If a user deletes a nodeID and updateMenu() is not called yet, it will throw an error if the nodeID no longer exsists.
