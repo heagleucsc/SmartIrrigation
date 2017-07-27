@@ -9,7 +9,6 @@ import * as moment from 'moment';
 
 let DEFAULT_FIELD = "humidity"
 
-// page_data class
 /*
   For the sake of legibility, the code that handles data
   has been migrated to this class. Therefore, all actions
@@ -39,14 +38,14 @@ export class user_data{
   token;
   _data: timeBoxedData;
   latest = {};
-  initialized: false;
   base_url = "https://slugsense.herokuapp.com";
-  // visual params //
-  // ..
-  // ..
+
 
   constructor(nid: number){
     this._nid = nid;
+    if (this.token == null){
+      console.log("token lost");
+    }
     this.token = localStorage.getItem("token");
 
     //init
@@ -55,36 +54,9 @@ export class user_data{
     this.latest["moisture"] = -1;
     this.latest["sunlight"] = -1;
 
-    // Using result from login.ts ensures that the
-    // initial display of data on the buttons are accurate
-
-    // Not implemented yet - work to be done in login.ts
-    //this._latest = localStorage.getItem("latest");
-
-    if (this.token == null){
-      console.log("token lost");
-    }
     this.update24hrData();
   }
 
-  // Public access function to pull data
-  // for displaying on the button
-  //
-  // Babandeep requested that buttons display
-  // the latest none null node, so this data
-  // should return data from latest_reading call
-  // rather than from that of the prev_24 call
-
-  public getLatest(field: string){
-    //if (!this._latest || !(field in this._latest)) return -1;
-    //return this._latest.field;
-    /*
-    if (!this._data) return -1;
-    let latest = this._data.getLatestData();
-    if ( !(field in latest) ) return -1;
-    return latest[field];
-    */
-  }
 
 
   public updateData(){
@@ -134,11 +106,7 @@ export class user_data{
     else {
       chart.option = getOptionsNoGradient();
       chart.graphData(this.emptyData());
-      // graphNull()
     }
-	  //console.log("Test2: " + field.localeCompare("humidity"));
-	  //console.log("Test3: " + chartData.option);
-	 //hartData.getHum(chart, chart.option);
 	  if(field.localeCompare("humidity") == 0){
 		  chart.getHum();
 	  }else if(field.localeCompare("moisture") == 0){

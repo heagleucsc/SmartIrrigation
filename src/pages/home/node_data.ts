@@ -156,16 +156,5 @@ export class timeBoxedData{
     return 1;
   };
 
-  /* Puts the timestamps into the correct format for the graph*/
-  private formatTime(a:string){
-	  if(a == null){
-		  return a;
-	  }
-	  let start = a.indexOf("T") + 1;
-	  let end = a.indexOf(":", start + 3);
-	  let temp = a.substring(start,end);
-	  return temp;
-  }
-
 
 }
