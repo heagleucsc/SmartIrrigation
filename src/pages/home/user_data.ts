@@ -161,11 +161,11 @@ export class user_data{
 
   private emptyData(){
     return {
-      "time": new Array(24),
-      "humidity": new Array(24),
-      "temperature": new Array(24),
-      "moisture": new Array(24),
-      "sunlight": new Array(24),
+      "time": new Array(),
+      "humidity": new Array(),
+      "temperature": new Array(),
+      "moisture": new Array(),
+      "sunlight": new Array(),
     }
   }
 
