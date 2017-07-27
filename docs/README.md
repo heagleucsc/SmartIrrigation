@@ -1,11 +1,11 @@
 ## Missing docs
 ### ~~Sprint Plans~~
-- Sprint_1 (incomplete)
+- ~~Sprint_1~~
 - ~~Sprint_2~~
 - ~~Sprint_3~~
 
 ### ~~Sprint Reports~~
-- Sprint_1 (not sure if we need this)
+- ~~Sprint_1 (not sure if we need this)~~
 - ~~Sprint_2~~
 - ~~Sprint_3~~
 
@@ -13,4 +13,4 @@
 
 ### Working Prototype Known Problems Report 
 
-### Final Presentation
+### ~~Final Presentation~~
