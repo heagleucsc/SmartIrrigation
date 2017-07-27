@@ -56,7 +56,8 @@ export class LoginPage {
           data: { username: myUsername, password: myPassword }
         }).fail(function(err) {
           console.log(err);
-          this.showError("Invalid Credentials");
+          if (!this.newAccount)
+            this.showError("Invalid Credentials");
           //console.log("Invalid Credentials");
         }).done(function(data) {
           console.log(data);
@@ -90,6 +91,7 @@ export class LoginPage {
       this.loading = this.loadingCtrl.create({
         content: 'Please Wait...',
         dismissOnPageChange: true
+
       });
       this.loading.present();
     }

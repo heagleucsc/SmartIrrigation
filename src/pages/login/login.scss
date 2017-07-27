@@ -1,12 +1,17 @@
 page-login {
 
     .login-content {
-      background: linear-gradient(rgba(49,208,214,0.6)), url("../../assets/Artboard.png") no-repeat center;
+      background: linear-gradient(rgba(49,208,214,0.6)), url("../../assets/Artboard.png");
+      background-size:cover;
       //overflow: hidden;
     }
 
     #layer {
       //background-color: rgba(49, 208, 214, 0.6);
+    }
+
+    .scroll-content {
+      height:100%;
     }
 
      .login-box {
@@ -52,12 +57,17 @@ page-login {
          font-weight: 800 !important;
          text-decoration: underline;
          text-underline-position: under;
+        //  padding-bottom: -10%;
+        line-height: 30%;
+
+         //float:
       }
       #h2-wrapper {
-        margin-top: -10%;
-        padding-top: auto;
         font-size: 140% !important;
         font-weight: 400 !important;
+        line-height: 30%;
+
+        //float: none;
       }
       #name-wrapper {
         text-align: center;
@@ -90,16 +100,16 @@ page-login {
         font-size: 0.8em;
       }
 
-      #forgotpass-wrapper {
-        float: left;
-        margin-top: 5%;
-        margin-left: 2.5%;
-      }
-      .forgotpass-btn {
-        color: #fff;
-        font-weight: bold;
-        font-size: 0.8em;
-      }
+      // #forgotpass-wrapper {
+      //   float: left;
+      //   margin-top: 5%;
+      //   margin-left: 2.5%;
+      // }
+      // .forgotpass-btn {
+      //   color: #fff;
+      //   font-weight: bold;
+      //   font-size: 0.8em;
+      // }
 
       #password-wrapper {
         margin-top: 5%;

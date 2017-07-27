@@ -5,7 +5,7 @@ import { LoginPage } from './login';
 
 //import { Materialize } from '../../assets/materialize/css/materialize.css';
 //import { NoobAnimationsModule } from '@angular/platform-browser/animations';
-//import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MdCardModule, MdButtonModule, MdListModule } from '@angular/material';
 
 

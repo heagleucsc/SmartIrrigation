@@ -1,7 +1,7 @@
 page-home {
   .home {
-    background: linear-gradient(rgba(49,208,214,0.6)), url("../../assets/Artboard.png") no-repeat center;
-
+    background: linear-gradient(rgba(49,208,214,0.6)), url("../../assets/Artboard.png");
+    background-size:cover;
   }
  echart {
    div {
@@ -12,9 +12,16 @@ page-home {
  }
 
  .scroll-content {
-   height: auto
+   height:auto;
  }
 
+  echart {
+    div {
+      width: 100%;
+      margin-right: 20px;
+      height:50%;
+    }
+  }
   .nodes-wrapper{
     background-color: #fff;
     margin-bottom: 1.5%;
@@ -44,6 +51,3 @@ page-home {
 // .menu-icon {
 //     color: black;
 // }
-
-
-

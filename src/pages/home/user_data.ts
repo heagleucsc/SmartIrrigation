@@ -1,12 +1,14 @@
-import {ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {timeBoxedData } from './node_data';
-import {data_display} from './echarts';
+import {data_display, getDefaultOptions, getOptionsNoGradient} from './echarts';
 
 import * as $ from 'jquery';
-//import * as echarts from 'echarts';
+import * as echarts from 'echarts';
+import * as moment from 'moment';
 
 
-// page_data class
+let DEFAULT_FIELD = "humidity"
+
 /*
   For the sake of legibility, the code that handles data
   has been migrated to this class. Therefore, all actions
@@ -36,14 +38,14 @@ export class user_data{
   token;
   _data: timeBoxedData;
   latest = {};
-  initialized: false;
   base_url = "https://slugsense.herokuapp.com";
-  // visual params //
-  // ..
-  // ..
+
 
   constructor(nid: number){
     this._nid = nid;
+    if (this.token == null){
+      console.log("token lost");
+    }
     this.token = localStorage.getItem("token");
 
     //init
@@ -52,36 +54,9 @@ export class user_data{
     this.latest["moisture"] = -1;
     this.latest["sunlight"] = -1;
 
-    // Using result from login.ts ensures that the
-    // initial display of data on the buttons are accurate
-
-    // Not implemented yet - work to be done in login.ts
-    //this._latest = localStorage.getItem("latest");
-
-    if (this.token == null){
-      console.log("token lost");
-    }
-    //this.update24hrData();
+    this.update24hrData();
   }
 
-  // Public access function to pull data
-  // for displaying on the button
-  //
-  // Babandeep requested that buttons display
-  // the latest none null node, so this data
-  // should return data from latest_reading call
-  // rather than from that of the prev_24 call
-
-  public getLatest(field: string){
-    //if (!this._latest || !(field in this._latest)) return -1;
-    //return this._latest.field;
-    /*
-    if (!this._data) return -1;
-    let latest = this._data.getLatestData();
-    if ( !(field in latest) ) return -1;
-    return latest[field];
-    */
-  }
 
 
   public updateData(){
@@ -96,7 +71,6 @@ export class user_data{
         console.log("Node id invalid or server timeout");
       }).
       done(function(data){
-        console.log(data);
         this._data = new timeBoxedData(data, 24);
       });
   };
@@ -113,23 +87,26 @@ export class user_data{
       });
   }
 
-
   public changeNid(nid, chart){
     this._nid = nid;
     this.update24hrData();
     this.updateLatest();
-	this.updateGraphOptions(chart, "humidity");
+	  this.updateGraphOptions(chart, DEFAULT_FIELD);
   }
 
 
 //Updates the graph
   public updateGraphOptions(chart: data_display, field: string){
-	  //let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
-	  //console.log("Test1: " + field);
-	  chart.graphData(this._data.getDataAsDict());
-	  //console.log("Test2: " + field.localeCompare("humidity"));
-	  //console.log("Test3: " + chartData.option);
-	 //hartData.getHum(chart, chart.option);
+	  let dict: { [fieldName: string]: Object[]} = this._data.getDataAsDict();
+    //console.log("Test1: " + field);
+    if (this.assertOneNoneNullDataToday()){
+      chart.option = getDefaultOptions();
+      chart.graphData(this._data.getDataAsDict());
+    }
+    else {
+      chart.option = getOptionsNoGradient();
+      chart.graphData(this.emptyData());
+    }
 	  if(field.localeCompare("humidity") == 0){
 		  chart.getHum();
 	  }else if(field.localeCompare("moisture") == 0){
@@ -140,6 +117,24 @@ export class user_data{
 		  chart.getSun();
 	  }
 
+  }
+
+  private assertOneNoneNullDataToday(){
+    let now = moment();
+    let hoursInDay = 24;
+    let yesterday = now.subtract(hoursInDay,'hours');
+    let latestDate = moment(this.latest["createdAt"], moment.ISO_8601);
+    return latestDate.isAfter(yesterday);
+  }
+
+  private emptyData(){
+    return {
+      "time": new Array(),
+      "humidity": new Array(),
+      "temperature": new Array(),
+      "moisture": new Array(),
+      "sunlight": new Array(),
+    }
   }
 
 
@@ -181,7 +176,7 @@ export class user_data{
     };
     return $.ajax({
 	  context: this,
-      async:false,
+      async: false,
       type: "POST",
       dataType: "json",
       url: this.base_url+"/api/nodes/prev_24h/"+nid.toString(),
@@ -192,6 +187,7 @@ export class user_data{
   private getLatestNode(nid){
     return $.ajax({
       type: "POST",
+      async: false,
       context: this,
       dataType: "json",
       url: this.base_url+"/api/nodes/"+nid.toString()+"/latest_reading",
@@ -235,11 +231,6 @@ export class user_data{
     });
   }
 
-  // Check data
-  public AssertDataNotNull(): boolean{
-    return (this._data != null);
-  }
-
   //
   public getNodeIds(){
     return this.getLatestAll();
@@ -253,6 +244,4 @@ export class user_data{
     console.log(this.latest)
   }
 
-
-
-};
+}

@@ -8,12 +8,10 @@ export interface nodeData_json{
   id: any;
 }
 
-
 /*
 nodeDatum is an immutable storage class for a single data point.
 Should be used only by timeBoxedData
 */
-
 class nodeDatum{
   private _date;
   private _id;
@@ -46,6 +44,7 @@ class nodeDatum{
 /* timeBoxedData
 Main storage class for the JSON data.
 
+
 -------------------
 
 Constructor must be called via an array of Objects which contain
@@ -72,7 +71,11 @@ by the fieldname. The dictionary must have an an ordered 'time' field.
 Its index must correspond to the index of the field values of their
 corresponding data point.
 
+
 */
+
+
+
 
 export class timeBoxedData{
   private _latestDate;
@@ -107,7 +110,9 @@ export class timeBoxedData{
     }
 	/*Takes the array of time stamps and puts them in the correct format*/
 	for(let i = 0; i < stamps.length; i++){
-		stamps[i] = this.formatTime(stamps[i]);
+		//stamps[i] = this.formatTime(stamps[i]);
+    let t1 = moment(stamps[i], moment.ISO_8601);
+    stamps[i] = t1.format("h:mmA");
 
 	}
 	dict["time"] = stamps;
@@ -150,17 +155,6 @@ export class timeBoxedData{
     }
     return 1;
   };
-
-  /* Puts the timestamps into the correct format for the graph*/
-  private formatTime(a:string){
-	  if(a == null){
-		  return a;
-	  }
-	  let start = a.indexOf("T") + 1;
-	  let end = a.indexOf(":", start + 3);
-	  let temp = a.substring(start,end);
-	  return temp;
-  }
 
 
 }

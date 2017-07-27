@@ -27,9 +27,9 @@
     </div>
   </md-list>
 
-
-  <div class="login-box">
     <form (ngSubmit)="login()" #registerForm="ngForm">
+  <div class="login-box">
+
       <md-card id="card-wrapper">
       <ion-row>
         <ion-col>
@@ -45,8 +45,9 @@
         </ion-col>
       </ion-row>
     </md-card>
+  </div>
 
-    <div class="login-content">
+    <div>
       <ion-row>
         <ion-col class="signup-col">
           <div id="login-wrapper">
@@ -55,13 +56,13 @@
           <div id="register-wrapper">
               <button ion-button class="register-btn" block clear (click)="createAccount()">Register</button>
           </div>
-          <div id="forgotpass-wrapper">
+          <!-- <div id="forgotpass-wrapper">
               <button ion-button class="forgotpass-btn" black clear>FORGOT YOUR PASSWORD?</button>
-          </div>
+          </div> -->
         </ion-col>
       </ion-row>
     </div>
    </form>
-  </div>
+  <!-- </div> -->
 
 </ion-content>
